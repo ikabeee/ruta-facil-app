@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,101 +7,129 @@ import {
   StyleSheet,
   Switch,
 } from 'react-native';
-import { Ionicons, MaterialIcons, Entypo, Feather } from '@expo/vector-icons';
+import { Ionicons, Entypo } from '@expo/vector-icons';
 
-// Ocultar header de Expo Router
+// Oculta el header "driver/routes"
 export const options = {
   headerShown: false,
 };
 
 export default function RoutesScreen() {
+  const [routes, setRoutes] = useState([
+    {
+      id: 1,
+      title: 'Centro - Mercado',
+      color: '#3B82F6',
+      stops: 8,
+      isActive: false,
+    },
+    {
+      id: 2,
+      title: 'Escuela - Plaza',
+      color: '#10B981',
+      stops: 6,
+      isActive: false,
+    },
+  ]);
+
+  // Determinar si alguna ruta está activa
+  const anyActive = routes.some((route) => route.isActive);
+
+  // Función para activar o desactivar una ruta
+  const toggleRoute = (id) => {
+    setRoutes((prevRoutes) =>
+      prevRoutes.map((route) =>
+        route.id === id
+          ? { ...route, isActive: !route.isActive }
+          : route
+      )
+    );
+  };
+
+  // Hacer que el switch principal active o desactive todas las rutas
+  const toggleAllRoutes = (value) => {
+    setRoutes((prevRoutes) =>
+      prevRoutes.map((route) => ({
+        ...route,
+        isActive: value,
+      }))
+    );
+  };
+
   return (
     <View style={styles.container}>
-      {/* HEADER AZUL */}
+      {/* Header azul */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Ruta Facil</Text>
+        <Text style={styles.headerTitle}>Ruta Fácil</Text>
         <View style={styles.statusContainer}>
           <Ionicons
             name="ellipse"
             size={10}
-            color="#60A5FA"
+            color={anyActive ? "#10B981" : "#60A5FA"}
             style={{ marginRight: 4 }}
           />
-          <Text style={styles.statusText}>Inactivo</Text>
-          <Switch value={false} onValueChange={() => {}} />
+          <Text style={styles.statusText}>
+            {anyActive ? "Activo" : "Inactivo"}
+          </Text>
+          <Switch
+            value={anyActive}
+            onValueChange={toggleAllRoutes}
+          />
         </View>
       </View>
 
-      {/* ICONOS DE ABAJO DEL HEADER */}
-      <View style={styles.topIcons}>
-        <TouchableOpacity style={styles.iconButton}>
-          <Feather name="share-2" size={20} color="#6B7280" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Feather name="alert-triangle" size={20} color="#6B7280" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Feather name="navigation" size={20} color="#6B7280" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Feather name="star" size={20} color="#6B7280" />
-        </TouchableOpacity>
-      </View>
-
       <ScrollView contentContainerStyle={styles.scroll}>
-        {/* MIS RUTAS + BOTÓN NUEVA RUTA EN FILA */}
-        <View style={styles.routesHeader}>
+        {/* Sección encabezado */}
+        <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Mis Rutas</Text>
           <TouchableOpacity style={styles.newRouteButton}>
             <Text style={styles.newRouteButtonText}>+ Nueva Ruta</Text>
           </TouchableOpacity>
         </View>
 
-        {/* RUTA 1 */}
-        <View style={styles.routeCard}>
-          <View style={styles.routeHeader}>
-            <Ionicons name="location-sharp" size={20} color="#20c997" />
-            <Text style={styles.routeTitle}>Centro - Mercado</Text>
-          </View>
-          <Text style={styles.routeSubtext}>8 paradas registradas</Text>
-          <View style={styles.routeButtons}>
-            <TouchableOpacity
-              style={[styles.startButton, styles.activeStartButton]}
-            >
-              <Entypo name="controller-play" size={16} color="#fff" />
-              <Text style={[styles.startButtonText, { color: '#fff' }]}>
-                Iniciar
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.editButton}>
-              <Text style={styles.editButtonText}>Editar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* RUTA 2 */}
-        <View style={styles.routeCard}>
-          <View style={styles.routeHeader}>
-            <Ionicons name="location-sharp" size={20} color="#20c997" />
-            <Text style={styles.routeTitle}>Escuela - Plaza</Text>
-          </View>
-          <Text style={styles.routeSubtext}>6 paradas registradas</Text>
-          <View style={styles.routeButtons}>
-            <TouchableOpacity style={styles.startButton}>
-              <Entypo name="controller-play" size={16} color="#20c997" />
-              <Text
-                style={[styles.startButtonText, { color: '#20c997' }]}
+        {routes.map((route) => (
+          <View key={route.id} style={styles.routeCard}>
+            <View style={styles.routeHeader}>
+              <Ionicons
+                name="location-sharp"
+                size={20}
+                color={route.color}
+              />
+              <Text style={styles.routeTitle}>{route.title}</Text>
+            </View>
+            <Text style={styles.routeSubtext}>
+              {route.stops} paradas registradas
+            </Text>
+            <View style={styles.routeButtons}>
+              <TouchableOpacity
+                style={[
+                  styles.startButton,
+                  route.isActive && styles.activeStartButton,
+                ]}
+                onPress={() => toggleRoute(route.id)}
               >
-                Iniciar
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.editButton}>
-              <Text style={styles.editButtonText}>Editar</Text>
-            </TouchableOpacity>
+                <Entypo
+                  name="controller-play"
+                  size={16}
+                  color={route.isActive ? "#fff" : "#000"}
+                />
+                <Text
+                  style={[
+                    styles.startButtonText,
+                    { color: route.isActive ? "#fff" : "#000" },
+                  ]}
+                >
+                  {route.isActive ? "Detener" : "Iniciar"}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.editButton}>
+                <Text style={styles.editButtonText}>Editar</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        ))}
 
-        {/* REGISTRAR NUEVA RUTA */}
+        {/* Registrar Nueva Ruta */}
         <View style={styles.newRouteCard}>
           <TouchableOpacity style={styles.mapBox}>
             <Ionicons name="location-outline" size={28} color="#9CA3AF" />
@@ -135,7 +163,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     color: '#FFFFFF',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 30,
   },
   statusContainer: {
     flexDirection: 'row',
@@ -145,20 +173,10 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginRight: 8,
   },
-  topIcons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderColor: '#E5E7EB',
-  },
-  iconButton: {
-    padding: 8,
-  },
   scroll: {
     padding: 16,
   },
-  routesHeader: {
+  sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -169,10 +187,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   newRouteButton: {
-    backgroundColor: '#20c997',
-    paddingVertical: 8,
+    backgroundColor: '#000000',
+    paddingVertical: 6,
     paddingHorizontal: 12,
-    borderRadius: 6,
+    borderRadius: 8,
+    alignItems: 'center',
   },
   newRouteButtonText: {
     color: '#FFFFFF',
@@ -203,16 +222,16 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   startButton: {
-  flexDirection: 'row',
-  backgroundColor: '#E5E7EB',
-  paddingVertical: 6,
-  paddingHorizontal:60,
-  borderRadius: 4,
-  alignItems: 'center',
-  gap: 6,
+    flexDirection: 'row',
+    backgroundColor: '#E5E7EB',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+    alignItems: 'center',
+    gap: 6,
   },
   activeStartButton: {
-    backgroundColor: '#20c997',
+    backgroundColor: '#000000',
   },
   startButtonText: {
     color: '#000000',
