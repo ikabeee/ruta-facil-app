@@ -72,5 +72,39 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     position: 'absolute',
-  },
+  }
 });
+
+export interface Incident {
+  id: string;
+  type: string;
+  status: 'Activa' | 'Resuelta' | 'En Proceso';
+  location: string;
+  reportedBy: string;
+  timeAgo: string;
+  icon: string;
+  statusColor: string;
+  description?: string;
+  priority?: 'Alta' | 'Media' | 'Baja';
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface Driver {
+  id: string;
+  name: string;
+  status: 'Activo' | 'Inactivo';
+  vehicleId?: string;
+  currentLocation?: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
+export interface ReportIncidentData {
+  type: 'traffic' | 'accident' | 'construction' | 'other';
+  location: string;
+  description: string;
+  priority: 'Alta' | 'Media' | 'Baja';
+  images?: string[];
+}
