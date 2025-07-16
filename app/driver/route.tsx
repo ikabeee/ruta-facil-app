@@ -7,7 +7,7 @@ import {
   Switch,
   StyleSheet,
 } from 'react-native';
-import { Ionicons, Feather } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 import { HeaderBar } from '../../components/activeRoute/HeaderBar';
 import { CardBox } from '../../components/activeRoute/CardBox';
@@ -22,10 +22,10 @@ export default function RouteScreen() {
 
       {/* Sección de pestañas */}
       <View style={styles.tabRow}>
-        <Feather name="share-2" size={22} color="#6B7280" />
-        <Feather name="alert-triangle" size={22} color="#6B7280" />
-        <Feather name="send" size={22} color="#20c997" />
-        <Feather name="star" size={22} color="#6B7280" />
+        <Ionicons name="share-social-outline" size={22} color="#6B7280" />
+        <Ionicons name="alert-circle-outline" size={22} color="#6B7280" />
+        <Ionicons name="paper-plane-outline" size={22} color="#20c997" />
+        <Ionicons name="star-outline" size={22} color="#6B7280" />
       </View>
 
       <ScrollView contentContainerStyle={{ padding: 16 }}>
@@ -38,7 +38,7 @@ export default function RouteScreen() {
 
           <View style={[styles.row, { marginBottom: 16 }]}>
             <Ionicons name="location-sharp" size={16} color="#0072ff" />
-            <Text style={{ marginLeft: 6 }}>Centro – Mercado</Text>
+            <Text style={{ marginLeft: 6 }}>Centro – Mercado</Text>
           </View>
 
           <View style={[styles.row, { marginBottom: 16 }]}>
@@ -82,7 +82,7 @@ export default function RouteScreen() {
               <Text style={styles.stopTime}>2 min aprox.</Text>
             </View>
             <TouchableOpacity style={styles.checkBtn}>
-              <Feather name="check" color="#FFF" size={16} />
+              <Ionicons name="checkmark" color="#FFF" size={16} />
             </TouchableOpacity>
           </View>
 
