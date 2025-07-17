@@ -68,7 +68,7 @@ export default function MobileTransportApp() {
           <Building size={24} color="white" />
           <View>
             <Text style={styles.headerTitle}>Ruta Facil</Text>
-            <Text style={styles.headerSubtitle}>San Miguel de los Milagros</Text>
+            <Text style={styles.headerSubtitle}>Huauchinango, Puebla</Text>
           </View>
         </View>
         <TouchableOpacity>
@@ -84,17 +84,17 @@ export default function MobileTransportApp() {
             <MapPin size={16} color="white" />
             <Text style={styles.locationLabel}>Tu ubicación actual</Text>
           </View>
-          <Text style={styles.locationTitle}>Centro de Pueblo Mágico</Text>
-          <Text style={styles.locationSubtitle}>San Miguel de los Milagros</Text>
+          <Text style={styles.locationTitle}>Centro</Text>
+          <Text style={styles.locationSubtitle}>Huauchinango, Puebla</Text>
         </View>
 
         {/* Search Input */}
         <View style={styles.searchContainer}>
-          <Search size={20} color="#6b7280" style={styles.searchIcon} />
+          <Search size={20} color="#000000ff" style={styles.searchIcon} />
           <TextInput
             style={styles.searchInput}
             placeholder="¿A dónde quieres ir?"
-            placeholderTextColor="#6b7280"
+            placeholderTextColor="#000000ff"
           />
         </View>
 
@@ -128,11 +128,11 @@ export default function MobileTransportApp() {
               <Text style={styles.routeDescription}>{route.description}</Text>
               <View style={styles.routeInfo}>
                 <View style={styles.infoItem}>
-                  <Clock size={16} color="#6b7280" />
+                  <Clock size={16} color="#000000ff" />
                   <Text style={styles.infoText}>{route.time} min</Text>
                 </View>
                 <View style={styles.infoItem}>
-                  <MapPin size={16} color="#6b7280" />
+                  <MapPin size={16} color="#000000ff" />
                   <Text style={styles.infoText}>{route.distance} km</Text>
                 </View>
                 <Text style={styles.routePrice}>${route.price}</Text>
@@ -155,19 +155,19 @@ export default function MobileTransportApp() {
       {/* Bottom Navigation */}
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.navItem}>
-          <Home size={24} color="#ea580c" />
+          <Home size={24} color="#20c997" />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
-          <Search size={24} color="#6b7280" />
+          <Search size={24} color="#000000ff" />
           <Text style={styles.navText}>Buscar</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
-          <Bookmark size={24} color="#6b7280" />
+          <Bookmark size={24} color="#000000ff" />
           <Text style={styles.navText}>Favoritos</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem}>
-          <Send size={24} color="#6b7280" />
+          <Send size={24} color="#000000ff" />
           <Text style={styles.navText}>Seguir</Text>
         </TouchableOpacity>
       </View>
@@ -178,7 +178,7 @@ export default function MobileTransportApp() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#f3f4f6" },
   header: {
-    backgroundColor: "#fb923c",
+    backgroundColor: "#20c997",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   headerSubtitle: { color: "white", fontSize: 12, opacity: 0.9 },
   content: { flex: 1 },
   locationCard: {
-    backgroundColor: "#fb923c",
+    backgroundColor: "#20c997",
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
@@ -222,14 +222,14 @@ const styles = StyleSheet.create({
   quickActionBtn: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "#fb923c",
+    borderColor: "#000000ff",
     borderRadius: 8,
     alignItems: "center",
     paddingVertical: 12,
     marginHorizontal: 4,
     backgroundColor: "#fff",
   },
-  quickActionText: { color: "#ea580c", fontSize: 14, marginTop: 4 },
+  quickActionText: { color: "#000000ff", fontSize: 14, marginTop: 4 },
   section: { marginBottom: 32 },
   sectionHeader: { flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 12 },
   sectionTitle: { fontSize: 16, fontWeight: "bold", color: "#111827" },
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
   routeButtons: { flexDirection: "row", gap: 8, marginTop: 12 },
   followButton: {
     flex: 1,
-    backgroundColor: "#ea580c",
+    backgroundColor: "#20c997",
     paddingVertical: 8,
     borderRadius: 6,
     flexDirection: "row",
@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
   saveButton: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "#ea580c",
+    borderColor: "",
     paddingVertical: 8,
     borderRadius: 6,
     flexDirection: "row",
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     gap: 6,
     backgroundColor: "white",
   },
-  saveText: { color: "#ea580c", fontWeight: "bold" },
+  saveText: { color: "#000000ff", fontWeight: "bold" },
   navbar: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -293,5 +293,5 @@ const styles = StyleSheet.create({
     borderColor: "#e5e7eb",
   },
   navItem: { alignItems: "center" },
-  navText: { fontSize: 10, marginTop: 2, color: "#6b7280" },
+  navText: { fontSize: 10, marginTop: 2, color: "#000000ff" },
 })
