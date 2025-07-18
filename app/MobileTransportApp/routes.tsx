@@ -20,14 +20,14 @@ import {
   Send,
   Circle,
   Landmark,
-  Menu,
-} from "lucide-react-native";
+} from "lucide-react-native"; // Quitado "Menu"
 
 export default function SeguirRutaScreen() {
   const router = useRouter();
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* Encabezado estilo "Inicio" */}
+      {/* Encabezado sin el icono de menú */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Landmark size={20} color="#fff" style={{ marginRight: 8 }} />
@@ -36,7 +36,6 @@ export default function SeguirRutaScreen() {
             <Text style={styles.headerSubtitle}>Huauchinango, Puebla</Text>
           </View>
         </View>
-        <Menu size={20} color="#fff" />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -112,7 +111,7 @@ export default function SeguirRutaScreen() {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Navegación inferior actualizada */}
+      {/* Navegación inferior */}
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/user")}> 
           <Home size={24} color="#000000ff" />
@@ -263,7 +262,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   statusText: {
-    color: "",
     fontWeight: "bold",
     fontSize: 12,
   },

@@ -1,23 +1,22 @@
-import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import {
-  View,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-} from "react-native";
-import {
-  Landmark,
-  Menu,
-  Home,
-  Search,
   Heart,
+  Home,
+  Landmark,
+  Search,
   Send,
   Star,
   StarOff,
 } from "lucide-react-native";
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 const TripCompletedScreen = () => {
   const [rating, setRating] = useState(0);
@@ -34,7 +33,6 @@ const TripCompletedScreen = () => {
             <Text style={styles.headerSubtitle}>San Miguel de los Milagros</Text>
           </View>
         </View>
-        <Menu size={20} color="#fff" />
       </View>
 
       {/* CONTENIDO */}

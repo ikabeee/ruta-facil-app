@@ -11,13 +11,12 @@ import {
 } from "react-native";
 import {
   Landmark,
-  Menu,
   Home,
   Search,
   Heart,
   Send,
   MapPin,
-} from "lucide-react-native";
+} from "lucide-react-native"; // ❌ Menu eliminado
 
 export default function BuscarDestinoScreen() {
   const router = useRouter();
@@ -41,7 +40,7 @@ export default function BuscarDestinoScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Encabezado */}
+      {/* Encabezado sin icono de menú */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Landmark size={20} color="#fff" style={{ marginRight: 8 }} />
@@ -50,9 +49,7 @@ export default function BuscarDestinoScreen() {
             <Text style={styles.headerSubtitle}>San Miguel de los Milagros</Text>
           </View>
         </View>
-        <Menu size={20} color="#fff" />
       </View>
-
 
       {/* Buscador */}
       <View style={styles.searchContainer}>
@@ -64,8 +61,6 @@ export default function BuscarDestinoScreen() {
           onChangeText={setSearch}
         />
       </View>
-
-      {/* Aquí iba el mapa, eliminado para restaurar el estado original */}
 
       {/* Lista de destinos */}
       <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -89,19 +84,19 @@ export default function BuscarDestinoScreen() {
 
       {/* Barra de navegación inferior */}
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/user")}> 
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/user")}>
           <Home size={24} color="#000" />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/search")}> 
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/search")}>
           <Search size={24} color="#20c997" />
           <Text style={[styles.navText, { color: "#000" }]}>Buscar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/favoritos")}> 
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/favoritos")}>
           <Heart size={24} color="#000" />
           <Text style={styles.navText}>Favoritos</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/routes")}> 
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/routes")}>
           <Send size={24} color="#000" />
           <Text style={styles.navText}>Seguir</Text>
         </TouchableOpacity>
@@ -117,7 +112,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start", // Ajustado al eliminar el ícono de menú
     alignItems: "center",
     backgroundColor: "#20c997",
     padding: 16,

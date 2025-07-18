@@ -10,17 +10,17 @@ import {
 } from "react-native";
 import {
   Landmark,
-  Menu,
   Clock,
   DollarSign,
   Home,
   Search,
   Heart,
   Send,
-} from "lucide-react-native";
+} from "lucide-react-native"; // Menu eliminado
 
 export default function FavoritosScreen() {
   const router = useRouter();
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Encabezado */}
@@ -32,7 +32,7 @@ export default function FavoritosScreen() {
             <Text style={styles.headerSubtitle}>San Miguel de los Milagros</Text>
           </View>
         </View>
-        <Menu size={20} color="#fff" />
+        {/* Ícono Menu eliminado */}
       </View>
 
       {/* Título */}
@@ -46,7 +46,9 @@ export default function FavoritosScreen() {
             <Text style={styles.status}>En ruta</Text>
           </View>
           <Text style={styles.routeName}>Ruta Centro Histórico</Text>
-          <Text style={styles.destination}>Plaza Principal → Mercado de Artesanías</Text>
+          <Text style={styles.destination}>
+            Plaza Principal → Mercado de Artesanías
+          </Text>
 
           <View style={styles.infoRow}>
             <Clock size={14} color="#6b7280" />
@@ -72,7 +74,9 @@ export default function FavoritosScreen() {
             <Text style={styles.status}>En ruta</Text>
           </View>
           <Text style={styles.routeName}>Ruta Cascadas</Text>
-          <Text style={styles.destination}>Centro → Cascadas Encantadas</Text>
+          <Text style={styles.destination}>
+            Centro → Cascadas Encantadas
+          </Text>
 
           <View style={styles.infoRow}>
             <Clock size={14} color="#6b7280" />
@@ -94,19 +98,31 @@ export default function FavoritosScreen() {
 
       {/* Navegación inferior */}
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/user")}> 
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/user")}
+        >
           <Home size={24} color="#000" />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/search")}> 
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/search")}
+        >
           <Search size={24} color="#000" />
           <Text style={styles.navText}>Buscar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItemActive} onPress={() => router.push("/MobileTransportApp/favoritos")}> 
+        <TouchableOpacity
+          style={styles.navItemActive}
+          onPress={() => router.push("/MobileTransportApp/favoritos")}
+        >
           <Heart size={24} color="#20c997" />
           <Text style={[styles.navText, { color: "#000" }]}>Favoritos</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/routes")}> 
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/routes")}
+        >
           <Send size={24} color="#000" />
           <Text style={styles.navText}>Seguir</Text>
         </TouchableOpacity>
@@ -116,10 +132,7 @@ export default function FavoritosScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
+  container: { flex: 1, backgroundColor: "#fff" },
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -127,23 +140,13 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
   },
-  headerLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  headerTitle: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  headerSubtitle: {
-    color: "#ffe4e6",
-    fontSize: 12,
-  },
+  headerLeft: { flexDirection: "row", alignItems: "center" },
+  headerTitle: { color: "#fff", fontWeight: "bold", fontSize: 16 },
+  headerSubtitle: { color: "#ffe4e6", fontSize: 12 },
   sectionTitle: {
     fontWeight: "bold",
     fontSize: 18,
-    color: "#",
+    color: "#111827",
     paddingHorizontal: 16,
     paddingTop: 16,
   },
