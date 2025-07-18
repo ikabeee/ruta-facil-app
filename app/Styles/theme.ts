@@ -1,10 +1,10 @@
 export const colors = {
-  primary: '#2196F3',
+  primary: '#20c997',
   secondary: '#FF9800',
-  success: '#4CAF50',
+  success: '#20c997',
   error: '#F44336',
   warning: '#FFC107',
-  info: '#00BCD4',
+  info: '#20c997',
   
   background: '#F5F5F5',
   surface: '#FFFFFF',

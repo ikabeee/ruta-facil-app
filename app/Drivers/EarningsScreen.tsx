@@ -9,14 +9,27 @@ import {
     View,
 } from 'react-native';
 import { colors, spacing, typography } from '../Styles/theme';
+import HamburgerMenu from './HamburgerMenu';
 
 const EarningsScreen: React.FC = () => {
+  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
+        <TouchableOpacity 
+          style={styles.headerButton}
+          onPress={toggleMenu}
+        >
+          <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
+        </TouchableOpacity>
         <Text style={styles.title}>Ganancias</Text>
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.headerButton}>
           <MaterialIcons name="file-download" size={24} color={colors.textSecondary} />
         </TouchableOpacity>
       </View>
@@ -56,27 +69,6 @@ const EarningsScreen: React.FC = () => {
           </View>
         </View>
 
-        {/* Payment Methods */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Métodos de Pago</Text>
-          {[
-            { method: 'Efectivo', amount: 45.50, percentage: 36, icon: 'attach-money' },
-            { method: 'Tarjeta', amount: 65.25, percentage: 52, icon: 'credit-card' },
-            { method: 'Digital', amount: 14.75, percentage: 12, icon: 'phone-android' },
-          ].map((payment, index) => (
-            <View key={index} style={styles.paymentItem}>
-              <View style={styles.paymentInfo}>
-                <MaterialIcons name={payment.icon as any} size={24} color={colors.primary} />
-                <View style={styles.paymentDetails}>
-                  <Text style={styles.paymentMethod}>{payment.method}</Text>
-                  <Text style={styles.paymentPercentage}>{payment.percentage}%</Text>
-                </View>
-              </View>
-              <Text style={styles.paymentAmount}>${payment.amount}</Text>
-            </View>
-          ))}
-        </View>
-
         {/* Recent Earnings */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Ganancias Recientes</Text>
@@ -96,6 +88,12 @@ const EarningsScreen: React.FC = () => {
           ))}
         </View>
       </ScrollView>
+
+      {/* Hamburger Menu Overlay */}
+      <HamburgerMenu 
+        isVisible={isMenuVisible} 
+        onClose={() => setIsMenuVisible(false)} 
+      />
     </SafeAreaView>
   );
 };
@@ -117,6 +115,9 @@ const styles = StyleSheet.create({
     fontSize: typography.sizes.xl,
     fontWeight: typography.weights.bold,
     color: colors.textPrimary,
+  },
+  headerButton: {
+    padding: spacing.sm,
   },
   content: {
     flex: 1,
@@ -211,34 +212,6 @@ const styles = StyleSheet.create({
     fontWeight: typography.weights.bold,
     color: colors.textPrimary,
     marginBottom: spacing.md,
-  },
-  paymentItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  paymentInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  paymentDetails: {
-    marginLeft: spacing.md,
-  },
-  paymentMethod: {
-    fontSize: typography.sizes.md,
-    color: colors.textPrimary,
-  },
-  paymentPercentage: {
-    fontSize: typography.sizes.sm,
-    color: colors.textSecondary,
-  },
-  paymentAmount: {
-    fontSize: typography.sizes.md,
-    fontWeight: typography.weights.bold,
-    color: colors.success,
   },
   earningItem: {
     flexDirection: 'row',

@@ -9,8 +9,15 @@ import {
     View,
 } from 'react-native';
 import { colors, spacing, typography } from '../Styles/theme';
+import HamburgerMenu from './HamburgerMenu';
 
 const TripsScreen: React.FC = () => {
+  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
+  
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
+
   const filters = ['Todos (12)', 'Hoy (3)', 'Esta semana (8)', 'Este mes (12)'];
   
   const trips = [
@@ -50,7 +57,10 @@ const TripsScreen: React.FC = () => {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.title}>Mis Viajes</Text>
+        <TouchableOpacity onPress={toggleMenu}>
+          <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
+        </TouchableOpacity>
+        <Text style={styles.title}>Mis Rutas</Text>
         <TouchableOpacity>
           <MaterialIcons name="search" size={24} color={colors.textSecondary} />
         </TouchableOpacity>
@@ -110,6 +120,12 @@ const TripsScreen: React.FC = () => {
           </View>
         ))}
       </ScrollView>
+
+      {/* Hamburger Menu Overlay */}
+      <HamburgerMenu 
+        isVisible={isMenuVisible} 
+        onClose={() => setIsMenuVisible(false)} 
+      />
     </SafeAreaView>
   );
 };

@@ -29,6 +29,15 @@ export default function RootLayout() {
         <Stack.Screen name="incidents" options={{ headerShown: false }} />
         <Stack.Screen name="Califications" options={{ headerShown: false }} />
         <Stack.Screen name="Califications/ProfileScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/HomeScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/TripsScreen" options={{ headerShown: false }} />  
+        <Stack.Screen name="Drivers/EarningsScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/DocumentsScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/ProfileScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/SettingScreen" options={{ headerShown: false }} />  
+        <Stack.Screen name="Drivers/SupportScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/CustomDrawerContent" options={{ headerShown: false }}
+        />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

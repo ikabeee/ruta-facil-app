@@ -9,14 +9,27 @@ import {
     View
 } from 'react-native';
 import { colors, spacing, typography } from '../Styles/theme';
+import HamburgerMenu from './HamburgerMenu';
 
 const ProfileScreen: React.FC = () => {
+  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
+        <TouchableOpacity 
+          style={styles.headerButton}
+          onPress={toggleMenu}
+        >
+          <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
+        </TouchableOpacity>
         <Text style={styles.title}>Mi Perfil</Text>
-        <TouchableOpacity>
+        <TouchableOpacity style={styles.headerButton}>
           <MaterialIcons name="edit" size={24} color={colors.textSecondary} />
         </TouchableOpacity>
       </View>
@@ -105,6 +118,12 @@ const ProfileScreen: React.FC = () => {
           <Text style={styles.logoutText}>Cerrar Sesión</Text>
         </TouchableOpacity>
       </ScrollView>
+
+      {/* Hamburger Menu Overlay */}
+      <HamburgerMenu 
+        isVisible={isMenuVisible} 
+        onClose={() => setIsMenuVisible(false)} 
+      />
     </SafeAreaView>
   );
 };
@@ -126,6 +145,9 @@ const styles = StyleSheet.create({
     fontSize: typography.sizes.xl,
     fontWeight: typography.weights.bold,
     color: colors.textPrimary,
+  },
+  headerButton: {
+    padding: spacing.sm,
   },
   content: {
     flex: 1,
