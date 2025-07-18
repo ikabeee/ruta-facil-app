@@ -9,6 +9,7 @@ import ReportIncidentSection from './ReportIncidentSection';
 // Mock data - replace with your API calls
 const mockIncidents = [
   {
+
     id: '1',
     type: 'Tráfico Pesado',
     status: 'Activa',
@@ -70,7 +71,17 @@ const IncidentsScreen: React.FC<IncidentsScreenProps> = ({
           <TouchableOpacity
             key={icon.name}
             style={styles.iconButton}
-            onPress={() => router.push(icon.screen)}
+            onPress={() => {
+              if (icon.name === 'warning-outline') {
+                // No hacer nada, ya estamos en la pantalla de IncidentsScreen
+                return;
+              }
+              if (icon.name === 'star-outline') {
+                router.push('/Califications/ProfileScreen');
+                return;
+              }
+              router.push(icon.screen);
+            }}
           >
             <Ionicons name={icon.name} size={28} color="#374151" />
           </TouchableOpacity>
