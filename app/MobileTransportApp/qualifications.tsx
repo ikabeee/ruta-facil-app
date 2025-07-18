@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "expo-router";
 import {
   View,
   Text,
@@ -20,6 +21,7 @@ import {
 
 const TripCompletedScreen = () => {
   const [rating, setRating] = useState(0);
+  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,26 +73,29 @@ const TripCompletedScreen = () => {
           <Text style={styles.primaryText}>Selecciona una calificación</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.skipBtn}>
+        <TouchableOpacity
+          style={styles.skipBtn}
+          onPress={() => router.push("/MobileTransportApp/user")}
+        >
           <Text style={styles.skipText}>Omitir por ahora</Text>
         </TouchableOpacity>
       </ScrollView>
 
       {/* NAVBAR */}
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/user")}> 
           <Home size={24} color="#000" />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/search")}> 
           <Search size={24} color="#000" />
           <Text style={styles.navText}>Buscar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/favoritos")}> 
           <Heart size={24} color="#000" />
           <Text style={styles.navText}>Favoritos</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItemActive}>
+        <TouchableOpacity style={styles.navItemActive} onPress={() => router.push("/MobileTransportApp/routes")}> 
           <Send size={24} color="#20c997" />
           <Text style={[styles.navText, { color: "#000" }]}>Seguir</Text>
         </TouchableOpacity>

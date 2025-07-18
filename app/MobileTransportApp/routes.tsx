@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "expo-router";
 import {
   View,
   Text,
@@ -23,6 +24,7 @@ import {
 } from "lucide-react-native";
 
 export default function SeguirRutaScreen() {
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       {/* Encabezado estilo "Inicio" */}
@@ -92,13 +94,19 @@ export default function SeguirRutaScreen() {
         </View>
 
         {/* Botón: He llegado */}
-        <TouchableOpacity style={styles.successBtn}>
+        <TouchableOpacity
+          style={styles.successBtn}
+          onPress={() => router.push("/MobileTransportApp/qualifications")}
+        >
           <Check size={16} color="#fff" style={{ marginRight: 6 }} />
           <Text style={styles.successText}>He llegado a mi destino</Text>
         </TouchableOpacity>
 
         {/* Botón: Cancelar */}
-        <TouchableOpacity style={styles.cancelBtn}>
+        <TouchableOpacity 
+          style={styles.cancelBtn}
+          onPress={() => router.push("/MobileTransportApp/user")}
+        >
           <X size={16} color="#111827" style={{ marginRight: 6 }} />
           <Text style={styles.cancelText}>Cancelar seguimiento</Text>
         </TouchableOpacity>
@@ -106,19 +114,19 @@ export default function SeguirRutaScreen() {
 
       {/* Navegación inferior actualizada */}
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/user")}> 
           <Home size={24} color="#000000ff" />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/search")}> 
           <Search size={24} color="#000000ff" />
           <Text style={styles.navText}>Buscar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/favoritos")}> 
           <Heart size={24} color="#000000ff" />
           <Text style={styles.navText}>Favoritos</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/routes")}> 
           <Send size={24} color="#20c997" />
           <Text style={styles.navText}>Seguir</Text>
         </TouchableOpacity>

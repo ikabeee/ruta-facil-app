@@ -1,4 +1,6 @@
 import React from "react"
+import { useRouter } from "expo-router"
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
   Text,
@@ -21,6 +23,7 @@ import {
 } from "lucide-react-native"
 
 export default function MobileTransportApp() {
+  const router = useRouter();
   const routes = [
     {
       name: "Ruta Centro Histórico",
@@ -91,11 +94,20 @@ export default function MobileTransportApp() {
         {/* Search Input */}
         <View style={styles.searchContainer}>
           <Search size={20} color="#000000ff" style={styles.searchIcon} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="¿A dónde quieres ir?"
-            placeholderTextColor="#000000ff"
-          />
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => router.push("/MobileTransportApp/search")}
+            style={{ flex: 1 }}
+          >
+            <View pointerEvents="none">
+              <TextInput
+                style={styles.searchInput}
+                placeholder="¿A dónde quieres ir?"
+                placeholderTextColor="#000000ff"
+                editable={false}
+              />
+            </View>
+          </TouchableOpacity>
         </View>
 
         {/* Quick Actions */}
@@ -138,11 +150,30 @@ export default function MobileTransportApp() {
                 <Text style={styles.routePrice}>${route.price}</Text>
               </View>
               <View style={styles.routeButtons}>
-                <TouchableOpacity style={styles.followButton}>
+                <TouchableOpacity
+                  style={styles.followButton}
+                  onPress={() => router.push("/MobileTransportApp/routes")}
+                >
                   <Send size={16} color="white" />
                   <Text style={styles.followText}>Seguir</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.saveButton}>
+                <TouchableOpacity
+                  style={styles.saveButton}
+                  onPress={async () => {
+                    try {
+                      const stored = await AsyncStorage.getItem("favoritos");
+                      let favoritos = stored ? JSON.parse(stored) : [];
+                      // Evitar duplicados por nombre
+                      if (!favoritos.some((f: { name: string }) => f.name === route.name)) {
+                        favoritos.push(route);
+                        await AsyncStorage.setItem("favoritos", JSON.stringify(favoritos));
+                      }
+                    } catch (e) {
+                      // Manejo de error opcional
+                    }
+                    router.push("/MobileTransportApp/favoritos");
+                  }}
+                >
                   <Heart size={16} color="#ea580c" />
                   <Text style={styles.saveText}>Guardar</Text>
                 </TouchableOpacity>
@@ -158,15 +189,15 @@ export default function MobileTransportApp() {
           <Home size={24} color="#20c997" />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/search")}> 
           <Search size={24} color="#000000ff" />
           <Text style={styles.navText}>Buscar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/favoritos")}> 
           <Bookmark size={24} color="#000000ff" />
           <Text style={styles.navText}>Favoritos</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/routes")}> 
           <Send size={24} color="#000000ff" />
           <Text style={styles.navText}>Seguir</Text>
         </TouchableOpacity>
