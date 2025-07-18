@@ -69,7 +69,10 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ isVisible, onClose }) => 
           {/* Quick Actions */}
           <View style={styles.menuQuickActions}>
             <Text style={styles.menuSectionTitle}>ACCIONES RÁPIDAS</Text>
-            <TouchableOpacity style={[styles.menuQuickAction, { backgroundColor: colors.error }]}>
+            <TouchableOpacity 
+              style={[styles.menuQuickAction, { backgroundColor: colors.error }]}
+              onPress={() => navigateToScreen('/Incidents/IncidentsScreen')}
+            >
               <MaterialIcons name="emergency" size={20} color="white" />
               <Text style={styles.menuQuickActionText}>Incidencia</Text>
             </TouchableOpacity>

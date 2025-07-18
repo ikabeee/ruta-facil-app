@@ -26,7 +26,10 @@ export default function RootLayout() {
         <Stack.Screen name="email-confirmation" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="incidents" options={{ headerShown: false }} />
+        <Stack.Screen name="Incidents/IncidentsScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Incidents/header" options={{ headerShown: false }} />
+        <Stack.Screen name="Incidents/IncidentCard" options={{ headerShown: false }} />
+        <Stack.Screen name="Incidents/ReportIncidentSection" options={{ headerShown: false }} />
         <Stack.Screen name="Califications" options={{ headerShown: false }} />
         <Stack.Screen name="Califications/ProfileScreen" options={{ headerShown: false }} />
         <Stack.Screen name="Drivers/HomeScreen" options={{ headerShown: false }} />

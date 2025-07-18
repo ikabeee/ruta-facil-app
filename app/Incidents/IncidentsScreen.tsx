@@ -1,7 +1,9 @@
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import HamburgerMenu from '../Drivers/HamburgerMenu';
+import { colors, spacing, typography } from '../Styles/theme';
 import IncidentCard from './IncidentCard';
 import IncidentsHeader from './IncidentsHeader';
 import ReportIncidentSection from './ReportIncidentSection';
@@ -43,64 +45,50 @@ const IncidentsScreen: React.FC<IncidentsScreenProps> = ({
   onIncidentPress,
 }) => {
   const router = useRouter();
+  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
 
-  // Header con 4 iconos que navegan a diferentes pantallas
-  const headerIcons = [
-    {
-      name: 'map-outline', // icono de rutas
-      screen: '/routes',
-    },
-    {
-      name: 'warning-outline',
-      screen: '/incidents',
-    },
-    {
-      name: 'paper-plane-outline',
-      screen: '/explore',
-    },
-    {
-      name: 'star-outline',
-      screen: '/favorites',
-    },
-  ];
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.headerIconsContainer}>
-        {headerIcons.map((icon) => (
-          <TouchableOpacity
-            key={icon.name}
-            style={styles.iconButton}
-            onPress={() => {
-              if (icon.name === 'warning-outline') {
-                // No hacer nada, ya estamos en la pantalla de IncidentsScreen
-                return;
-              }
-              if (icon.name === 'star-outline') {
-                router.push('/Califications/ProfileScreen');
-                return;
-              }
-              router.push(icon.screen);
-            }}
-          >
-            <Ionicons name={icon.name} size={28} color="#374151" />
-          </TouchableOpacity>
-        ))}
-      </View>
-      <IncidentsHeader onReportPress={onReportIncident} />
-      
-      <View style={styles.incidentsList}>
-        {incidents.map((incident) => (
-          <IncidentCard
-            key={incident.id}
-            incident={incident}
-            onPress={() => onIncidentPress?.(incident.id)}
-          />
-        ))}
+    <SafeAreaView style={styles.container}>
+      {/* Header with Menu Button */}
+      <View style={styles.header}>
+        <TouchableOpacity 
+          style={styles.headerButton}
+          onPress={toggleMenu}
+        >
+          <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
+        </TouchableOpacity>
+        
+        <View style={styles.headerCenter}>
+          <Text style={styles.headerTitle}>Incidencias</Text>
+        </View>
+        
+        <View style={styles.headerButton} />
       </View>
 
-      <ReportIncidentSection />
-    </ScrollView>
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        <IncidentsHeader onReportPress={onReportIncident} />        <View style={styles.incidentsList}>
+          {incidents.map((incident) => (
+            <IncidentCard
+              key={incident.id}
+              incident={incident}
+              onPress={() => onIncidentPress?.(incident.id)}
+            />
+          ))}
+        </View>
+
+        <ReportIncidentSection />
+      </ScrollView>
+
+      {/* Hamburger Menu Overlay */}
+      <HamburgerMenu 
+        isVisible={isMenuVisible} 
+        onClose={() => setIsMenuVisible(false)} 
+      />
+    </SafeAreaView>
   );
 };
 
@@ -109,21 +97,38 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    backgroundColor: colors.background,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  headerButton: {
+    padding: spacing.xs,
+    borderRadius: spacing.xs,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerCenter: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontSize: typography.sizes.lg,
+    fontWeight: typography.weights.bold,
+    color: colors.textPrimary,
+  },
+  content: {
+    flex: 1,
+  },
   incidentsList: {
     paddingHorizontal: 20,
-  },
-  headerIconsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingVertical: 16,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  iconButton: {
-    padding: 8,
-    borderRadius: 8,
   },
 });
 
