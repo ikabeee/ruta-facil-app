@@ -211,8 +211,8 @@ export default function MobileTransportApp() {
     style={styles.navItem}
     onPress={() => router.push("/MobileTransportApp/incidents")}
   >
-    <AlertTriangle size={24} color="#ef4444" />
-    <Text style={[styles.navText, { color: "#ef4444" }]}>Incidentes</Text>
+    <AlertTriangle size={24} color="#000000ff" />
+    <Text style={[styles.navText, { color: "#000000ff" }]}>Incidentes</Text>
   </TouchableOpacity>
 </View>
 

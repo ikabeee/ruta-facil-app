@@ -17,6 +17,7 @@ import {
   Search,
   Heart,
   Send,
+  AlertTriangle,
 } from "lucide-react-native";
 
 export default function FavoritosScreen() {
@@ -126,6 +127,13 @@ export default function FavoritosScreen() {
         >
           <Send size={24} color="#000" />
           <Text style={styles.navText}>Seguir</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/incidents")}
+        >
+          <AlertTriangle size={24} color="#000000ff" />
+          <Text style={[styles.navText, { color: "#000000ff" }]}>Incidentes</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

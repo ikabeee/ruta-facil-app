@@ -1,87 +1,65 @@
-import React, { useState } from "react";
-import { useRouter } from "expo-router";
+import React from "react"
+import { useRouter } from "expo-router"
 import {
   View,
   Text,
-  SafeAreaView,
-  TextInput,
-  ScrollView,
-  StyleSheet,
   TouchableOpacity,
-} from "react-native";
+  StyleSheet,
+} from "react-native"
 import {
-  Landmark,
   Home,
   Search,
   Heart,
   Send,
+  AlertTriangle,
   MapPin,
-  AlertTriangle, // icono agregado
-} from "lucide-react-native";
+  Clock,
+  Bus,
+} from "lucide-react-native"
 
-export default function BuscarDestinoScreen() {
-  const router = useRouter();
-  const [search, setSearch] = useState("");
-  const destinos = [
-    "Plaza Principal",
-    "Mercado de Artesanías",
-    "Iglesia Colonial",
-    "Mirador del Valle",
-    "Cascadas encantadas",
-    "Pirámide Antigua",
-    "Talleres de Artesanías",
-    "Aguas Termales",
-    "Casa de la Cultura",
-    "Museo del Pueblo",
-  ];
-
-  const filteredDestinos = destinos.filter((item) =>
-    item.toLowerCase().includes(search.toLowerCase())
-  );
+export default function SeguirRutaScreen() {
+  const router = useRouter()
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Encabezado sin icono de menú */}
+    <View style={styles.container}>
+      {/* Encabezado de seguimiento */}
       <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <Landmark size={20} color="#fff" style={{ marginRight: 8 }} />
-          <View>
-            <Text style={styles.headerTitle}>Transporte Mágico</Text>
-            <Text style={styles.headerSubtitle}>San Miguel de los Milagros</Text>
-          </View>
+        <Bus size={24} color="white" />
+        <View>
+          <Text style={styles.headerTitle}>Seguimiento de Ruta</Text>
+          <Text style={styles.headerSubtitle}>Ruta Activa en Tiempo Real</Text>
         </View>
       </View>
 
-      {/* Buscador */}
-      <View style={styles.searchContainer}>
-        <TextInput
-          placeholder="Buscar destino..."
-          placeholderTextColor="#6b7280"
-          style={styles.searchInput}
-          value={search}
-          onChangeText={setSearch}
-        />
+      {/* Estado actual */}
+      <View style={styles.routeCard}>
+        <View style={styles.routeHeader}>
+          <Text style={styles.routeTitle}>Ruta Centro Histórico</Text>
+          <View style={[styles.badge, { backgroundColor: "#22c55e" }]}> 
+            <Text style={styles.badgeText}>Llegando</Text>
+          </View>
+        </View>
+        <Text style={styles.routeDescription}>Plaza Principal → Mercado de Artesanías</Text>
+        <View style={styles.routeInfo}>
+          <View style={styles.infoItem}>
+            <Clock size={16} color="#000" />
+            <Text style={styles.infoText}>5 min</Text>
+          </View>
+          <View style={styles.infoItem}>
+            <MapPin size={16} color="#000" />
+            <Text style={styles.infoText}>0,8 km</Text>
+          </View>
+          <Text style={styles.routePrice}>$12</Text>
+        </View>
       </View>
 
-      {/* Lista de destinos */}
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.sectionTitle}>Destinos populares</Text>
-
-        {filteredDestinos.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={
-              item === "Mercado de Artesanías"
-                ? styles.selectedItem
-                : styles.listItem
-            }
-            onPress={() => router.push("/MobileTransportApp/user")}
-          >
-            <MapPin size={16} color="#fb923c" style={{ marginRight: 8 }} />
-            <Text style={styles.itemText}>{item}</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      {/* Mensaje principal */}
+      <View style={styles.centerTextContainer}>
+        <Text style={styles.centerTitle}>Seguimiento de Ruta Activa</Text>
+        <Text style={styles.centerSubtitle}>
+          Aquí se mostrará el estado del transporte en tiempo real.
+        </Text>
+      </View>
 
       {/* Barra de navegación inferior */}
       <View style={styles.navbar}>
@@ -89,110 +67,96 @@ export default function BuscarDestinoScreen() {
           style={styles.navItem}
           onPress={() => router.push("/MobileTransportApp/user")}
         >
-          <Home size={24} color="#000" />
+          <Home size={24} color="#000000ff" />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => router.push("/MobileTransportApp/search")}
         >
-          <Search size={24} color="#20c997" />
-          <Text style={[styles.navText, { color: "#000" }]}>Buscar</Text>
+          <Search size={24} color="#000000ff" />
+          <Text style={styles.navText}>Buscar</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => router.push("/MobileTransportApp/favoritos")}
         >
-          <Heart size={24} color="#000" />
+          <Heart size={24} color="#000000ff" />
           <Text style={styles.navText}>Favoritos</Text>
         </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => router.push("/MobileTransportApp/routes")}
         >
-          <Send size={24} color="#000" />
-          <Text style={styles.navText}>Seguir</Text>
+          <Send size={24} color="#20c997" />
+          <Text style={[styles.navText, { color: "#20c997" }]}>Seguir</Text>
         </TouchableOpacity>
 
-        {/* Nuevo botón con AlertTriangle */}
         <TouchableOpacity
           style={styles.navItem}
-          onPress={() => {
-            console.log("Alerta activada");
-            // Aquí puedes poner router.push(...) o cualquier acción
-          }}
+          onPress={() => router.push("/MobileTransportApp/incidents")}
         >
-          <AlertTriangle size={24} color="#000" />
+          <AlertTriangle size={24} color="#000000ff" />
           <Text style={styles.navText}>Incidentes</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
-  );
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
+  container: { flex: 1, backgroundColor: "#f3f4f6", justifyContent: "space-between" },
   header: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
     backgroundColor: "#20c997",
+    flexDirection: "row",
+    alignItems: "center",
     padding: 16,
+    gap: 8,
   },
-  headerLeft: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  headerTitle: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  headerSubtitle: {
-    color: "#ffe4e6",
-    fontSize: 12,
-  },
-  searchContainer: {
-    padding: 12,
-  },
-  searchInput: {
-    borderColor: "#d1d5db",
-    borderWidth: 1,
+  headerTitle: { color: "white", fontSize: 16, fontWeight: "bold" },
+  headerSubtitle: { color: "white", fontSize: 12, opacity: 0.9 },
+  routeCard: {
+    backgroundColor: "#fff",
     borderRadius: 8,
-    padding: 10,
-    fontSize: 14,
-    color: "#111827",
+    padding: 16,
+    margin: 16,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 1,
   },
-  sectionTitle: {
-    fontWeight: "bold",
-    fontSize: 16,
-    marginLeft: 16,
-    marginTop: 12,
-    marginBottom: 8,
-  },
-  scrollContent: {
-    paddingBottom: 80,
-  },
-  listItem: {
+  routeHeader: {
     flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 16,
-    paddingVertical: 10,
   },
-  selectedItem: {
+  routeTitle: { fontSize: 15, fontWeight: "bold", color: "#111827" },
+  badge: {
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+  },
+  badgeText: { color: "white", fontSize: 10 },
+  routeDescription: { fontSize: 13, color: "#6b7280", marginTop: 4 },
+  routeInfo: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 8,
     alignItems: "center",
+  },
+  infoItem: { flexDirection: "row", alignItems: "center", gap: 4 },
+  infoText: { fontSize: 12, color: "#4b5563" },
+  routePrice: { fontSize: 13, fontWeight: "bold", color: "#16a34a" },
+  centerTextContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 10,
-    backgroundColor: "#fff7ed",
+    marginBottom: 16,
+    alignItems: "center",
   },
-  itemText: {
-    fontSize: 14,
-    color: "#111827",
-  },
+  centerTitle: { fontSize: 20, fontWeight: "bold", marginBottom: 10 },
+  centerSubtitle: { fontSize: 16, color: "#6b7280" },
   navbar: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -201,12 +165,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: "#e5e7eb",
   },
-  navItem: {
-    alignItems: "center",
-  },
-  navText: {
-    fontSize: 10,
-    marginTop: 2,
-    color: "#6b7280",
-  },
-});
+  navItem: { alignItems: "center" },
+  navText: { fontSize: 10, marginTop: 2, color: "#000000ff" },
+})
