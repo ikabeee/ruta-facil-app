@@ -10,17 +10,18 @@ import {
 } from "react-native";
 import {
   Landmark,
+  Menu,
   Clock,
   DollarSign,
   Home,
   Search,
   Heart,
   Send,
-} from "lucide-react-native"; // Menu eliminado
+} from "lucide-react-native";
 
 export default function FavoritosScreen() {
   const router = useRouter();
-
+  
   return (
     <SafeAreaView style={styles.container}>
       {/* Encabezado */}
@@ -32,7 +33,7 @@ export default function FavoritosScreen() {
             <Text style={styles.headerSubtitle}>San Miguel de los Milagros</Text>
           </View>
         </View>
-        {/* Ícono Menu eliminado */}
+        <Menu size={20} color="#fff" />
       </View>
 
       {/* Título */}

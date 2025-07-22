@@ -20,7 +20,8 @@ import {
   Send,
   Circle,
   Landmark,
-} from "lucide-react-native"; // Quitado "Menu"
+  AlertTriangle, // <-- Agregado ícono
+} from "lucide-react-native";
 
 export default function SeguirRutaScreen() {
   const router = useRouter();
@@ -102,7 +103,7 @@ export default function SeguirRutaScreen() {
         </TouchableOpacity>
 
         {/* Botón: Cancelar */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.cancelBtn}
           onPress={() => router.push("/MobileTransportApp/user")}
         >
@@ -113,21 +114,41 @@ export default function SeguirRutaScreen() {
 
       {/* Navegación inferior */}
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/user")}> 
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/user")}
+        >
           <Home size={24} color="#000000ff" />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/search")}> 
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/search")}
+        >
           <Search size={24} color="#000000ff" />
           <Text style={styles.navText}>Buscar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/favoritos")}> 
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/favoritos")}
+        >
           <Heart size={24} color="#000000ff" />
           <Text style={styles.navText}>Favoritos</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/routes")}> 
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/routes")}
+        >
           <Send size={24} color="#20c997" />
           <Text style={styles.navText}>Seguir</Text>
+        </TouchableOpacity>
+        {/* Nuevo ícono de AlertTriangle para Incidentes */}
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/incidents")}
+        >
+          <AlertTriangle size={24} color="#000" />
+          <Text style={styles.navText}>Incidentes</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

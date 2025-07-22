@@ -18,6 +18,7 @@ import {
   Clock,
   Send,
   Home,
+  AlertTriangle,
 } from "lucide-react-native"
 
 export default function MobileTransportApp() {
@@ -63,6 +64,7 @@ export default function MobileTransportApp() {
 
   return (
     <View style={styles.container}>
+      {/* Header sin icono de menú */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Building size={24} color="white" />
@@ -73,8 +75,9 @@ export default function MobileTransportApp() {
         </View>
       </View>
 
+      {/* Main Scrollable Content */}
       <ScrollView style={styles.content} contentContainerStyle={{ padding: 16 }}>
-        
+        {/* Location Card */}
         <View style={styles.locationCard}>
           <View style={styles.locationTop}>
             <MapPin size={16} color="white" />
@@ -84,6 +87,7 @@ export default function MobileTransportApp() {
           <Text style={styles.locationSubtitle}>Huauchinango, Puebla</Text>
         </View>
 
+        {/* Search Input */}
         <View style={styles.searchContainer}>
           <Search size={20} color="#000000ff" style={styles.searchIcon} />
           <TouchableOpacity
@@ -102,6 +106,7 @@ export default function MobileTransportApp() {
           </TouchableOpacity>
         </View>
 
+        {/* Quick Actions */}
         <View style={styles.quickActions}>
           <TouchableOpacity style={styles.quickActionBtn}>
             <Heart size={24} color="#20c997" />
@@ -113,6 +118,7 @@ export default function MobileTransportApp() {
           </TouchableOpacity>
         </View>
 
+        {/* Nearby Routes */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Bus size={20} color="#ea580c" />
@@ -171,25 +177,45 @@ export default function MobileTransportApp() {
           ))}
         </View>
       </ScrollView>
-      
+      {/* Bottom Navigation */}
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navItem}>
-          <Home size={24} color="#20c997" />
-          <Text style={styles.navText}>Inicio</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/search")}>
-          <Search size={24} color="#000000ff" />
-          <Text style={styles.navText}>Buscar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/favoritos")}>
-          <Heart size={24} color="#000000ff" />
-          <Text style={styles.navText}>Favoritos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/routes")}>
-          <Send size={24} color="#000000ff" />
-          <Text style={styles.navText}>Seguir</Text>
-        </TouchableOpacity>
-      </View>
+  <TouchableOpacity
+    style={styles.navItem}
+    onPress={() => router.push("/MobileTransportApp/favoritos")}
+  >
+    <Home size={24} color="#20c997" />
+    <Text style={styles.navText}>Inicio</Text>
+  </TouchableOpacity>
+  <TouchableOpacity
+    style={styles.navItem}
+    onPress={() => router.push("/MobileTransportApp/search")}
+  >
+    <Search size={24} color="#000000ff" />
+    <Text style={styles.navText}>Buscar</Text>
+  </TouchableOpacity>
+  <TouchableOpacity
+    style={styles.navItem}
+    onPress={() => router.push("/MobileTransportApp/favoritos")}
+  >
+    <Heart size={24} color="#000000ff" />
+    <Text style={styles.navText}>Favoritos</Text>
+  </TouchableOpacity>
+  <TouchableOpacity
+    style={styles.navItem}
+    onPress={() => router.push("/MobileTransportApp/routes")}
+  >
+    <Send size={24} color="#000000ff" />
+    <Text style={styles.navText}>Seguir</Text>
+  </TouchableOpacity>
+  <TouchableOpacity
+    style={styles.navItem}
+    onPress={() => router.push("/MobileTransportApp/incidents")}
+  >
+    <AlertTriangle size={24} color="#ef4444" />
+    <Text style={[styles.navText, { color: "#ef4444" }]}>Incidentes</Text>
+  </TouchableOpacity>
+</View>
+
     </View>
   )
 }

@@ -16,7 +16,8 @@ import {
   Heart,
   Send,
   MapPin,
-} from "lucide-react-native"; // ❌ Menu eliminado
+  AlertTriangle, // icono agregado
+} from "lucide-react-native";
 
 export default function BuscarDestinoScreen() {
   const router = useRouter();
@@ -84,21 +85,45 @@ export default function BuscarDestinoScreen() {
 
       {/* Barra de navegación inferior */}
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/user")}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/user")}
+        >
           <Home size={24} color="#000" />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/search")}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/search")}
+        >
           <Search size={24} color="#20c997" />
           <Text style={[styles.navText, { color: "#000" }]}>Buscar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/favoritos")}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/favoritos")}
+        >
           <Heart size={24} color="#000" />
           <Text style={styles.navText}>Favoritos</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/routes")}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/routes")}
+        >
           <Send size={24} color="#000" />
           <Text style={styles.navText}>Seguir</Text>
+        </TouchableOpacity>
+
+        {/* Nuevo botón con AlertTriangle */}
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => {
+            console.log("Alerta activada");
+            // Aquí puedes poner router.push(...) o cualquier acción
+          }}
+        >
+          <AlertTriangle size={24} color="#000" />
+          <Text style={styles.navText}>Incidentes</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -112,7 +137,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "flex-start", // Ajustado al eliminar el ícono de menú
+    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#20c997",
     padding: 16,
