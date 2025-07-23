@@ -4,7 +4,6 @@ import {
   View,
   Text,
   SafeAreaView,
-  ScrollView,
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
@@ -27,6 +26,23 @@ export default function SeguirRutaScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Mapa pantalla completa */}
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: 20.1743,
+          longitude: -98.0474,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        }}
+      >
+        <Marker
+          coordinate={{ latitude: 20.1743, longitude: -98.0474 }}
+          title="Autobús"
+          description="En camino a tu ubicación"
+        />
+      </MapView>
+
       {/* Encabezado */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
@@ -38,77 +54,41 @@ export default function SeguirRutaScreen() {
         </View>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Información de la Ruta */}
-        <View style={styles.routeCard}>
-          <Text style={styles.routeCardTitle}>Siguiendo tu ruta</Text>
-          <Text style={styles.routeCardSubtitle}>Ruta Centro Histórico</Text>
+      {/* Panel inferior compacto */}
+      <View style={styles.bottomPanel}>
+        <View style={styles.infoRow}>
+          <Info size={14} color="#f97316" />
+          <Text style={styles.infoTitle}>Plaza → Mercado</Text>
         </View>
 
-        {/* Mapa */}
-        <View style={styles.mapCard}>
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: 20.1743,
-              longitude: -98.0474,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
-            }}
+        <Text style={styles.infoSmall}>
+          5 min • 0.8 km • <Text style={{ color: "#16a34a" }}>$12</Text>
+        </Text>
+
+        <View style={styles.statusBadge}>
+          <Circle size={10} color="#22c55e" style={{ marginRight: 6 }} />
+          <Text style={styles.statusText}>Llegando</Text>
+        </View>
+
+        {/* Botones compactos */}
+        <View style={{ flexDirection: "row", gap: 8, marginTop: 12 }}>
+          <TouchableOpacity
+            style={[styles.btnMini, { backgroundColor: "#20c997" }]}
+            onPress={() => router.push("/MobileTransportApp/qualifications")}
           >
-            <Marker
-              coordinate={{ latitude: 20.1743, longitude: -98.0474 }}
-              title="Autobús"
-              description="En camino a tu ubicación"
-            />
-          </MapView>
+            <Check size={14} color="#fff" />
+            <Text style={styles.btnTextLight}>Calificar Conductor</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.btnMini, { borderWidth: 1, borderColor: "#ccc" }]}
+            onPress={() => router.push("/MobileTransportApp/user")}
+          >
+            <X size={14} color="#111827" />
+            <Text style={styles.btnTextDark}>Cancelar Viaje</Text>
+          </TouchableOpacity>
         </View>
-
-        {/* Detalles del viaje */}
-        <View style={styles.infoCard}>
-          <View style={styles.infoHeader}>
-            <Info size={16} color="#f97316" />
-            <Text style={styles.infoTitle}>Información del viaje</Text>
-          </View>
-
-          <Text style={styles.infoText}>
-            <Text style={styles.label}>Destino: </Text>
-            Plaza Principal → Mercado de Artesanías
-          </Text>
-          <Text style={styles.infoText}>
-            <Text style={styles.label}>Tiempo estimado: </Text>5 minutos
-          </Text>
-          <Text style={styles.infoText}>
-            <Text style={styles.label}>Distancia: </Text>0.8 km
-          </Text>
-          <Text style={styles.infoText}>
-            <Text style={styles.label}>Costo: </Text>
-            <Text style={{ color: "#16a34a" }}>$12 MXN</Text>
-          </Text>
-
-          <View style={styles.statusBadge}>
-            <Circle size={10} color="#22c55e" style={{ marginRight: 6 }} />
-            <Text style={styles.statusText}>Llegando</Text>
-          </View>
-        </View>
-
-        {/* Botones de acción */}
-        <TouchableOpacity
-          style={styles.successBtn}
-          onPress={() => router.push("/MobileTransportApp/qualifications")}
-        >
-          <Check size={16} color="#fff" style={{ marginRight: 6 }} />
-          <Text style={styles.successText}>Calificar Conductor</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.cancelBtn}
-          onPress={() => router.push("/MobileTransportApp/user")}
-        >
-          <X size={16} color="#111827" style={{ marginRight: 6 }} />
-          <Text style={styles.cancelText}>Cancelar seguimiento</Text>
-        </TouchableOpacity>
-      </ScrollView>
+      </View>
 
       {/* Navegación inferior */}
       <View style={styles.navbar}>
@@ -155,13 +135,20 @@ export default function SeguirRutaScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f9fafb",
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
     backgroundColor: "#20c997",
     padding: 16,
+    flexDirection: "row",
+    alignItems: "center",
+    zIndex: 10,
   },
   headerLeft: {
     flexDirection: "row",
@@ -176,56 +163,30 @@ const styles = StyleSheet.create({
     color: "#ffe4e6",
     fontSize: 12,
   },
-  routeCard: {
-    backgroundColor: "#20c997",
+  bottomPanel: {
+    position: "absolute",
+    bottom: 60,
+    left: 16,
+    right: 16,
+    backgroundColor: "#ffffffee",
     padding: 12,
-    margin: 16,
-    borderRadius: 8,
-  },
-  routeCardTitle: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  routeCardSubtitle: {
-    color: "#e0e7ff",
-    fontSize: 12,
-  },
-  mapCard: {
-    backgroundColor: "#e0f2fe",
-    marginHorizontal: 16,
     borderRadius: 12,
-    marginBottom: 12,
-    overflow: "hidden",
+    elevation: 5,
   },
-  map: {
-    width: "100%",
-    height: 250,
-  },
-  infoCard: {
-    backgroundColor: "#fff",
-    marginHorizontal: 16,
-    padding: 16,
-    borderRadius: 8,
-    marginBottom: 12,
-    elevation: 2,
-  },
-  infoHeader: {
+  infoRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 12,
+    marginBottom: 4,
   },
   infoTitle: {
-    fontWeight: "bold",
-    marginLeft: 6,
-  },
-  infoText: {
+    fontWeight: "600",
     fontSize: 14,
-    marginBottom: 4,
+    marginLeft: 6,
     color: "#111827",
   },
-  label: {
-    fontWeight: "bold",
+  infoSmall: {
+    fontSize: 12,
+    color: "#4b5563",
   },
   statusBadge: {
     flexDirection: "row",
@@ -241,35 +202,31 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 12,
   },
-  successBtn: {
+  btnMini: {
     flexDirection: "row",
-    backgroundColor: "#20c997",
-    padding: 12,
-    borderRadius: 8,
     alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    gap: 6,
+    flex: 1,
     justifyContent: "center",
-    marginHorizontal: 16,
-    marginBottom: 8,
   },
-  successText: {
+  btnTextLight: {
     color: "#fff",
-    fontWeight: "bold",
+    fontWeight: "600",
+    fontSize: 12,
   },
-  cancelBtn: {
-    flexDirection: "row",
-    borderColor: "#d1d5db",
-    borderWidth: 1,
-    padding: 12,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    marginHorizontal: 16,
-  },
-  cancelText: {
+  btnTextDark: {
     color: "#111827",
-    fontWeight: "bold",
+    fontWeight: "600",
+    fontSize: 12,
   },
   navbar: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
     flexDirection: "row",
     justifyContent: "space-around",
     paddingVertical: 10,
