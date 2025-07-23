@@ -8,9 +8,9 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import {
-  Bus,
-  MapPin,
+  Landmark,
   Info,
   Check,
   X,
@@ -19,8 +19,7 @@ import {
   Heart,
   Send,
   Circle,
-  Landmark,
-  AlertTriangle, // <-- Agregado ícono
+  AlertTriangle,
 } from "lucide-react-native";
 
 export default function SeguirRutaScreen() {
@@ -28,44 +27,44 @@ export default function SeguirRutaScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Encabezado sin el icono de menú */}
+      {/* Encabezado */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Landmark size={20} color="#fff" style={{ marginRight: 8 }} />
           <View>
-            <Text style={styles.headerTitle}>Ruta Facil</Text>
+            <Text style={styles.headerTitle}>Ruta Fácil</Text>
             <Text style={styles.headerSubtitle}>Huauchinango, Puebla</Text>
           </View>
         </View>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Tarjeta de ruta */}
+        {/* Información de la Ruta */}
         <View style={styles.routeCard}>
           <Text style={styles.routeCardTitle}>Siguiendo tu ruta</Text>
           <Text style={styles.routeCardSubtitle}>Ruta Centro Histórico</Text>
         </View>
 
-        {/* Estado del bus */}
-        <View style={styles.busCard}>
-          <View style={styles.statusTop}>
-            <MapPin size={14} color="#10b981" />
-            <Text style={styles.liveBadge}>VIVIR</Text>
-          </View>
-
-          <View style={styles.busIcon}>
-            <Bus size={42} color="#f97316" />
-          </View>
-          <Text style={styles.busText}>🚌 Autobús en camino</Text>
-          <Text style={styles.arrival}>Llegará en 5 min</Text>
-
-          <View style={styles.progressBackground}>
-            <View style={styles.progressFill} />
-          </View>
-          <Text style={styles.progressLabel}>75% del recorrido completado</Text>
+        {/* Mapa */}
+        <View style={styles.mapCard}>
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: 20.1743,
+              longitude: -98.0474,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            }}
+          >
+            <Marker
+              coordinate={{ latitude: 20.1743, longitude: -98.0474 }}
+              title="Autobús"
+              description="En camino a tu ubicación"
+            />
+          </MapView>
         </View>
 
-        {/* Información del viaje */}
+        {/* Detalles del viaje */}
         <View style={styles.infoCard}>
           <View style={styles.infoHeader}>
             <Info size={16} color="#f97316" />
@@ -80,11 +79,11 @@ export default function SeguirRutaScreen() {
             <Text style={styles.label}>Tiempo estimado: </Text>5 minutos
           </Text>
           <Text style={styles.infoText}>
-            <Text style={styles.label}>Distancia: </Text>0,8 kilómetros
+            <Text style={styles.label}>Distancia: </Text>0.8 km
           </Text>
           <Text style={styles.infoText}>
             <Text style={styles.label}>Costo: </Text>
-            <Text style={{ color: "#16a34a" }}>$12 pesos mexicanos</Text>
+            <Text style={{ color: "#16a34a" }}>$12 MXN</Text>
           </Text>
 
           <View style={styles.statusBadge}>
@@ -93,16 +92,15 @@ export default function SeguirRutaScreen() {
           </View>
         </View>
 
-        {/* Botón: He llegado */}
+        {/* Botones de acción */}
         <TouchableOpacity
           style={styles.successBtn}
           onPress={() => router.push("/MobileTransportApp/qualifications")}
         >
           <Check size={16} color="#fff" style={{ marginRight: 6 }} />
-          <Text style={styles.successText}>He llegado a mi destino</Text>
+          <Text style={styles.successText}>Calificar Conductor</Text>
         </TouchableOpacity>
 
-        {/* Botón: Cancelar */}
         <TouchableOpacity
           style={styles.cancelBtn}
           onPress={() => router.push("/MobileTransportApp/user")}
@@ -142,7 +140,6 @@ export default function SeguirRutaScreen() {
           <Send size={24} color="#20c997" />
           <Text style={styles.navText}>Seguir</Text>
         </TouchableOpacity>
-        {/* Nuevo ícono de AlertTriangle para Incidentes */}
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => router.push("/MobileTransportApp/incidents")}
@@ -162,7 +159,6 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: "#20c997",
     padding: 16,
@@ -195,57 +191,16 @@ const styles = StyleSheet.create({
     color: "#e0e7ff",
     fontSize: 12,
   },
-  busCard: {
+  mapCard: {
     backgroundColor: "#e0f2fe",
     marginHorizontal: 16,
-    padding: 16,
     borderRadius: 12,
-    alignItems: "center",
     marginBottom: 12,
+    overflow: "hidden",
   },
-  statusTop: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignSelf: "stretch",
-    marginBottom: 6,
-  },
-  liveBadge: {
-    backgroundColor: "#d1fae5",
-    color: "#10b981",
-    fontSize: 12,
-    fontWeight: "bold",
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 12,
-  },
-  busIcon: {
-    marginVertical: 12,
-  },
-  busText: {
-    fontWeight: "bold",
-    fontSize: 16,
-    marginBottom: 4,
-  },
-  arrival: {
-    color: "#6b7280",
-    marginBottom: 8,
-  },
-  progressBackground: {
-    height: 8,
-    backgroundColor: "#f3f4f6",
-    borderRadius: 4,
+  map: {
     width: "100%",
-  },
-  progressFill: {
-    height: 8,
-    backgroundColor: "#20c997",
-    borderRadius: 4,
-    width: "75%",
-  },
-  progressLabel: {
-    fontSize: 12,
-    color: "#6b7280",
-    marginTop: 6,
+    height: 250,
   },
   infoCard: {
     backgroundColor: "#fff",
