@@ -89,21 +89,6 @@ const TripsScreen: React.FC = () => {
           showLogo={false}
           onSearchPress={handleSearchPress}
         />
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={[
-              styles.startRouteButton,
-              isButtonPressed && styles.startRouteButtonPressed,
-            ]}
-            activeOpacity={0.8}
-            onPressIn={() => setIsButtonPressed(true)}
-            onPressOut={() => setIsButtonPressed(false)}
-          >
-            <Text style={styles.routeAssignedText}>Ruta:</Text>
-            <Text style={styles.routeDetailsText}>Centro → Aeropuerto</Text>
-            <MaterialIcons name="navigation" size={20} color="white" />
-          </TouchableOpacity>
-        </View>
       </SafeAreaView>
 
       {/* Hoja inferior */}
@@ -118,12 +103,12 @@ const TripsScreen: React.FC = () => {
 
               <View style={styles.routeContainer}>
                 <View style={styles.routePoint}>
-                  <MaterialIcons name="my-location" size={14} color={colors.success} />
+                  <MaterialIcons name="my-location" size={12} color={colors.success} />
                   <Text style={styles.locationText}>{trip.from}</Text>
                 </View>
                 <View style={styles.routeLine} />
                 <View style={styles.routePoint}>
-                  <MaterialIcons name="location-on" size={14} color={colors.error} />
+                  <MaterialIcons name="location-on" size={12} color={colors.error} />
                   <Text style={styles.locationText}>{trip.to}</Text>
                 </View>
               </View>
@@ -133,7 +118,7 @@ const TripsScreen: React.FC = () => {
                   {trip.time} • {trip.duration} • {trip.distance}
                 </Text>
                 <View style={styles.ratingContainer}>
-                  <MaterialIcons name="star" size={14} color={colors.warning} />
+                  <MaterialIcons name="star" size={12} color={colors.warning} />
                   <Text style={styles.ratingText}>{trip.rating}</Text>
                 </View>
               </View>
@@ -187,55 +172,44 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: spacing.md,
   },
-  startRouteButton: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: '#FF4444',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 10,
-  },
   startRouteButtonPressed: { transform: [{ scale: 0.97 }], opacity: 0.9 },
-  routeAssignedText: { fontSize: 11, color: 'white', opacity: 0.8, marginBottom: 2 },
-  routeDetailsText: { fontSize: 12, color: 'white', fontWeight: 'bold' },
 
   bottomSheet: {
     position: 'absolute',
     bottom: 70,
     width: '100%',
-    height: height * 0.38,
+    height: height * 0.32,
     backgroundColor: 'rgba(255,255,255,0.95)',
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.md,
+    paddingHorizontal: spacing.md,
+    paddingTop: spacing.sm,
   },
   tripsList: { paddingBottom: 100 },
   tripCard: {
     backgroundColor: 'white',
-    borderRadius: 10,
-    padding: spacing.sm,
-    marginBottom: spacing.sm,
+    borderRadius: 8,
+    padding: spacing.xs,
+    marginBottom: spacing.xs,
     elevation: 1,
   },
-  tripHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 },
-  tripDate: { fontSize: 12, color: colors.textSecondary },
-  tripEarnings: { fontSize: 14, fontWeight: 'bold', color: colors.success },
-  routeContainer: { marginBottom: 4 },
-  routePoint: { flexDirection: 'row', alignItems: 'center', marginBottom: 2 },
-  locationText: { fontSize: 13, color: colors.textPrimary, marginLeft: 6, flex: 1 },
+  tripHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 2 },
+  tripDate: { fontSize: 11, color: colors.textSecondary },
+  tripEarnings: { fontSize: 13, fontWeight: 'bold', color: colors.success },
+  routeContainer: { marginBottom: 2 },
+  routePoint: { flexDirection: 'row', alignItems: 'center', marginBottom: 1 },
+  locationText: { fontSize: 12, color: colors.textPrimary, marginLeft: 6, flex: 1 },
   routeLine: {
     width: 2,
-    height: 12,
+    height: 8,
     backgroundColor: colors.border,
     marginLeft: 7,
-    marginVertical: 2,
+    marginVertical: 1,
   },
   tripFooter: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  statText: { fontSize: 11, color: colors.textSecondary },
+  statText: { fontSize: 10, color: colors.textSecondary },
   ratingContainer: { flexDirection: 'row', alignItems: 'center' },
-  ratingText: { fontSize: 12, color: colors.textSecondary, marginLeft: 4 },
+  ratingText: { fontSize: 11, color: colors.textSecondary, marginLeft: 4 },
 
   bottomNavigation: {
     position: 'absolute',
