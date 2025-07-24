@@ -1,5 +1,3 @@
-import { MaterialIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
 import React from 'react';
 import {
   SafeAreaView,
@@ -8,9 +6,15 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import { MaterialIcons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { colors, spacing, typography } from '../Styles/theme';
 import Header from './Header';
+
+const { height } = Dimensions.get('window');
 
 const TripsScreen: React.FC = () => {
   const [isButtonPressed, setIsButtonPressed] = React.useState(false);
@@ -19,8 +23,6 @@ const TripsScreen: React.FC = () => {
     console.log('Search pressed in Mis Rutas');
   };
 
-  const filters = ['Todos (12)', 'Hoy (3)', 'Esta semana (8)', 'Este mes (12)'];
-  
   const trips = [
     {
       date: '15 Ene 2024',
@@ -55,279 +57,215 @@ const TripsScreen: React.FC = () => {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Header 
-        title="Mis Rutas"
-        showSearch={true}
-        showLogo={false}
-        onSearchPress={handleSearchPress}
-      />
+    <View style={styles.container}>
+      {/* Mapa de fondo */}
+      <MapView
+        style={StyleSheet.absoluteFillObject}
+        initialRegion={{
+          latitude: 13.7031,
+          longitude: -89.2044,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
+        }}
+      >
+        <Marker
+          coordinate={{ latitude: 13.7031, longitude: -89.2044 }}
+          title="Inicio"
+          description="Centro Comercial Plaza"
+        />
+        <Marker
+          coordinate={{ latitude: 13.6929, longitude: -89.2182 }}
+          title="Destino"
+          description="Aeropuerto Internacional"
+          pinColor="tomato"
+        />
+      </MapView>
 
-      {/* Botón Empezar Ruta */}
-      <View style={styles.buttonContainer}>
-        <Text style={styles.buttonTitle}>Comenzar Ruta</Text>
-        <TouchableOpacity 
-          style={[
-            styles.startRouteButton, 
-            isButtonPressed && styles.startRouteButtonPressed
-          ]} 
-          activeOpacity={0.8}
-          onPressIn={() => setIsButtonPressed(true)}
-          onPressOut={() => setIsButtonPressed(false)}
-        >
-          <Text style={styles.routeAssignedText}>Ruta Asignada:</Text>
-          <Text style={styles.routeDetailsText}>Centro → Aeropuerto</Text>
-          <MaterialIcons name="navigation" size={28} color="white" style={styles.buttonIcon} />
-        </TouchableOpacity>
+      {/* Encabezado y botón */}
+      <SafeAreaView style={styles.headerWrapper}>
+        <Header
+          title="Mis Rutas"
+          showSearch
+          showLogo={false}
+          onSearchPress={handleSearchPress}
+        />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={[
+              styles.startRouteButton,
+              isButtonPressed && styles.startRouteButtonPressed,
+            ]}
+            activeOpacity={0.8}
+            onPressIn={() => setIsButtonPressed(true)}
+            onPressOut={() => setIsButtonPressed(false)}
+          >
+            <Text style={styles.routeAssignedText}>Ruta:</Text>
+            <Text style={styles.routeDetailsText}>Centro → Aeropuerto</Text>
+            <MaterialIcons name="navigation" size={20} color="white" />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+
+      {/* Hoja inferior */}
+      <View style={styles.bottomSheet}>
+        <ScrollView contentContainerStyle={styles.tripsList}>
+          {trips.map((trip, index) => (
+            <View key={index} style={styles.tripCard}>
+              <View style={styles.tripHeader}>
+                <Text style={styles.tripDate}>{trip.date}</Text>
+                <Text style={styles.tripEarnings}>${trip.earnings}</Text>
+              </View>
+
+              <View style={styles.routeContainer}>
+                <View style={styles.routePoint}>
+                  <MaterialIcons name="my-location" size={14} color={colors.success} />
+                  <Text style={styles.locationText}>{trip.from}</Text>
+                </View>
+                <View style={styles.routeLine} />
+                <View style={styles.routePoint}>
+                  <MaterialIcons name="location-on" size={14} color={colors.error} />
+                  <Text style={styles.locationText}>{trip.to}</Text>
+                </View>
+              </View>
+
+              <View style={styles.tripFooter}>
+                <Text style={styles.statText}>
+                  {trip.time} • {trip.duration} • {trip.distance}
+                </Text>
+                <View style={styles.ratingContainer}>
+                  <MaterialIcons name="star" size={14} color={colors.warning} />
+                  <Text style={styles.ratingText}>{trip.rating}</Text>
+                </View>
+              </View>
+            </View>
+          ))}
+        </ScrollView>
       </View>
 
-      {/* Trips List */}
-      <ScrollView style={styles.tripsList}>
-        {trips.map((trip, index) => (
-          <View key={index} style={styles.tripCard}>
-            <View style={styles.tripHeader}>
-              <Text style={styles.tripDate}>{trip.date}</Text>
-              <Text style={styles.tripEarnings}>${trip.earnings}</Text>
-            </View>
-            
-            <View style={styles.routeContainer}>
-              <View style={styles.routePoint}>
-                <MaterialIcons name="my-location" size={16} color={colors.success} />
-                <Text style={styles.locationText}>{trip.from}</Text>
-              </View>
-              <View style={styles.routeLine} />
-              <View style={styles.routePoint}>
-                <MaterialIcons name="location-on" size={16} color={colors.error} />
-                <Text style={styles.locationText}>{trip.to}</Text>
-              </View>
-            </View>
-            
-            <View style={styles.tripFooter}>
-              <View style={styles.tripStats}>
-                <Text style={styles.statText}>{trip.time}</Text>
-                <Text style={styles.statText}>{trip.duration}</Text>
-                <Text style={styles.statText}>{trip.distance}</Text>
-              </View>
-              <View style={styles.ratingContainer}>
-                <MaterialIcons name="star" size={16} color={colors.warning} />
-                <Text style={styles.ratingText}>{trip.rating}</Text>
-              </View>
-            </View>
-          </View>
-        ))}
-      </ScrollView>
-
-      {/* Bottom Navigation */}
+      {/* Navegación inferior original */}
       <View style={styles.bottomNavigation}>
-        <TouchableOpacity 
-          style={styles.navItem}
-          onPress={() => router.replace('/Drivers/HomeScreen')}
-        >
-          <MaterialIcons name="home" size={24} color="#666" />
-          <Text style={[styles.navText, { color: "#666" }]}>Inicio</Text>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/HomeScreen')}>
+          <MaterialIcons name="home" size={24} color="#999" />
+          <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.navItem}
-          onPress={() => router.replace('/Drivers/TripsScreen')}
-        >
+        <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/TripsScreen')}>
           <MaterialIcons name="directions-car" size={24} color="#20c997" />
-          <Text style={[styles.navText, { color: "#20c997" }]}>Rutas</Text>
+          <Text style={[styles.navText, { color: '#20c997' }]}>Rutas</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.navItem}
-          onPress={() => router.replace('/Drivers/EarningsScreen')}
-        >
-          <MaterialIcons name="local-taxi" size={24} color="#666" />
-          <Text style={[styles.navText, { color: "#666" }]}>Unidad</Text>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/EarningsScreen')}>
+          <MaterialIcons name="local-taxi" size={24} color="#999" />
+          <Text style={styles.navText}>Unidad</Text>
         </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.navItem}
-          onPress={() => router.replace('/Drivers/ProfileScreen')}
-        >
-          <MaterialIcons name="person" size={24} color="#666" />
-          <Text style={[styles.navText, { color: "#666" }]}>Perfil</Text>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/ProfileScreen')}>
+          <MaterialIcons name="person" size={24} color="#999" />
+          <Text style={styles.navText}>Perfil</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Floating Action Button for Incidents */}
-      <TouchableOpacity 
+      {/* Botón flotante */}
+      <TouchableOpacity
         style={styles.floatingButton}
         onPress={() => router.push('/Incidents/IncidentsScreen')}
       >
-        <MaterialIcons name="warning" size={28} color="white" />
+        <MaterialIcons name="warning" size={24} color="white" />
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
+  container: { flex: 1 },
+  headerWrapper: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    zIndex: 10,
+    backgroundColor: 'transparent',
+    paddingTop: spacing.sm,
   },
   buttonContainer: {
-    paddingVertical: spacing.lg,
-    paddingHorizontal: spacing.lg,
     alignItems: 'center',
-  },
-  buttonTitle: {
-    fontSize: typography.sizes.xl,
-    fontWeight: typography.weights.bold,
-    color: colors.textPrimary,
-    marginBottom: spacing.md,
-    textAlign: 'center',
+    marginTop: spacing.md,
   },
   startRouteButton: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     backgroundColor: '#FF4444',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 16,
-    shadowColor: '#FF4444',
-    shadowOffset: {
-      width: 0,
-      height: 8,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 16,
-    paddingHorizontal: spacing.sm,
+    elevation: 10,
   },
-  startRouteButtonPressed: {
-    elevation: 24,
-    shadowOffset: {
-      width: 0,
-      height: 12,
-    },
-    shadowOpacity: 0.7,
-    shadowRadius: 20,
-    transform: [{ scale: 0.98 }],
+  startRouteButtonPressed: { transform: [{ scale: 0.97 }], opacity: 0.9 },
+  routeAssignedText: { fontSize: 11, color: 'white', opacity: 0.8, marginBottom: 2 },
+  routeDetailsText: { fontSize: 12, color: 'white', fontWeight: 'bold' },
+
+  bottomSheet: {
+    position: 'absolute',
+    bottom: 70,
+    width: '100%',
+    height: height * 0.38,
+    backgroundColor: 'rgba(255,255,255,0.95)',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.md,
   },
-  routeAssignedText: {
-    fontSize: typography.sizes.xs,
-    fontWeight: typography.weights.medium,
-    color: 'rgba(255, 255, 255, 0.8)',
-    textAlign: 'center',
-    marginBottom: spacing.xs,
-  },
-  routeDetailsText: {
-    fontSize: typography.sizes.sm,
-    fontWeight: typography.weights.bold,
-    color: 'white',
-    textAlign: 'center',
-    marginBottom: spacing.xs,
-  },
-  buttonIcon: {
-    marginTop: spacing.xs,
-  },
-  tripsList: {
-    flex: 1,
-    padding: spacing.lg,
-  },
+  tripsList: { paddingBottom: 100 },
   tripCard: {
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-    padding: spacing.md,
-    marginBottom: spacing.md,
-    elevation: 2,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: spacing.sm,
+    marginBottom: spacing.sm,
+    elevation: 1,
   },
-  tripHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing.md,
-  },
-  tripDate: {
-    fontSize: typography.sizes.sm,
-    color: colors.textSecondary,
-  },
-  tripEarnings: {
-    fontSize: typography.sizes.lg,
-    fontWeight: typography.weights.bold,
-    color: colors.success,
-  },
-  routeContainer: {
-    marginBottom: spacing.md,
-  },
-  routePoint: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: spacing.xs,
-  },
-  locationText: {
-    fontSize: typography.sizes.sm,
-    color: colors.textPrimary,
-    marginLeft: spacing.sm,
-    flex: 1,
-  },
+  tripHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 },
+  tripDate: { fontSize: 12, color: colors.textSecondary },
+  tripEarnings: { fontSize: 14, fontWeight: 'bold', color: colors.success },
+  routeContainer: { marginBottom: 4 },
+  routePoint: { flexDirection: 'row', alignItems: 'center', marginBottom: 2 },
+  locationText: { fontSize: 13, color: colors.textPrimary, marginLeft: 6, flex: 1 },
   routeLine: {
     width: 2,
-    height: 20,
+    height: 12,
     backgroundColor: colors.border,
     marginLeft: 7,
-    marginVertical: spacing.xs,
+    marginVertical: 2,
   },
-  tripFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  tripStats: {
-    flexDirection: 'row',
-  },
-  statText: {
-    fontSize: typography.sizes.xs,
-    color: colors.textSecondary,
-    marginRight: spacing.md,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  ratingText: {
-    fontSize: typography.sizes.sm,
-    color: colors.textSecondary,
-    marginLeft: spacing.xs,
-  },
-  // Bottom Navigation Styles
+  tripFooter: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  statText: { fontSize: 11, color: colors.textSecondary },
+  ratingContainer: { flexDirection: 'row', alignItems: 'center' },
+  ratingText: { fontSize: 12, color: colors.textSecondary, marginLeft: 4 },
+
   bottomNavigation: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
     flexDirection: 'row',
-    backgroundColor: 'white',
-    paddingVertical: 8,
-    paddingBottom: 20,
+    justifyContent: 'space-around',
+    backgroundColor: '#fff',
     borderTopWidth: 1,
-    borderTopColor: '#E0E0E0',
+    borderTopColor: '#eee',
+    paddingVertical: 8,
     elevation: 8,
+    zIndex: 20,
   },
-  navItem: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: 4,
-  },
-  navText: {
-    fontSize: 12,
-    marginTop: 2,
-    fontWeight: '500',
-  },
+  navItem: { alignItems: 'center', justifyContent: 'center' },
+  navText: { fontSize: 12, color: '#999', marginTop: 2, fontWeight: '500' },
+
   floatingButton: {
     position: 'absolute',
-    bottom: 90,
-    right: 20,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    bottom: 120,
+    right: 16,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: '#FF4444',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+    elevation: 6,
+    zIndex: 15,
   },
 });
 
