@@ -52,38 +52,7 @@ const EarningsScreen: React.FC = () => {
           </View>
         </View>
 
-        {/* Chart Placeholder */}
-        <View style={styles.chartContainer}>
-          <Text style={styles.sectionTitle}>Historial de Mantenimiento</Text>
-          <View style={styles.chartPlaceholder}>
-            <MaterialIcons name="build" size={48} color={colors.textSecondary} />
-            <Text style={styles.chartText}>Cronograma de mantenimiento</Text>
-          </View>
-        </View>
 
-        {/* Recent Activities */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Actividades Recientes</Text>
-          {[
-            { date: 'Hoy', activity: 'Revisión técnica', status: 'Aprobada' },
-            { date: 'Ayer', activity: 'Cambio de aceite', status: 'Completado' },
-            { date: '13 Ene', activity: 'Limpieza general', status: 'Completado' },
-            { date: '12 Ene', activity: 'Revisión de frenos', status: 'Pendiente' },
-          ].map((item, index) => (
-            <View key={index} style={styles.earningItem}>
-              <View>
-                <Text style={styles.earningDate}>{item.date}</Text>
-                <Text style={styles.earningTrips}>{item.activity}</Text>
-              </View>
-              <Text style={[
-                styles.earningAmount, 
-                { color: item.status === 'Pendiente' ? colors.warning : colors.success }
-              ]}>
-                {item.status}
-              </Text>
-            </View>
-          ))}
-        </View>
       </ScrollView>
 
       {/* Bottom Navigation */}

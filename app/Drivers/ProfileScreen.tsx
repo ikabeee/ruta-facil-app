@@ -82,28 +82,7 @@ const ProfileScreen: React.FC = () => {
           </View>
         </View>
 
-        {/* Menu Options */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Configuración</Text>
-          {[
-            { title: 'Información Personal', icon: 'person', color: colors.primary },
-            { title: 'Documentos', icon: 'description', color: colors.warning },
-            { title: 'Métodos de Pago', icon: 'payment', color: colors.success },
-            { title: 'Notificaciones', icon: 'notifications', color: colors.info },
-            { title: 'Privacidad', icon: 'security', color: colors.textSecondary },
-            { title: 'Soporte', icon: 'help', color: colors.secondary },
-          ].map((option, index) => (
-            <TouchableOpacity key={index} style={styles.menuItem}>
-              <View style={styles.menuItemLeft}>
-                <View style={[styles.menuIcon, { backgroundColor: option.color }]}>
-                  <MaterialIcons name={option.icon as any} size={20} color="white" />
-                </View>
-                <Text style={styles.menuTitle}>{option.title}</Text>
-              </View>
-              <MaterialIcons name="chevron-right" size={24} color={colors.textSecondary} />
-            </TouchableOpacity>
-          ))}
-        </View>
+
 
         {/* Logout */}
         <TouchableOpacity style={styles.logoutButton}>
