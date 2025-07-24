@@ -17,7 +17,7 @@ export default function Index() {
 
   useEffect(() => {
     if (isReady) {
-      router.replace("../Drivers/HomeScreen"); // Redirige a la pantalla de viajes
+      router.replace("../Drivers/TripsScreen"); // Redirige a la pantalla de viajes
     }
   }, [isReady, router]);
 

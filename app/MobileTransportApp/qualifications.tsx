@@ -68,14 +68,14 @@ const TripCompletedScreen = () => {
         </View>
 
         <TouchableOpacity style={styles.primaryBtn}>
-          <Text style={styles.primaryText}>Selecciona una calificación</Text>
+          <Text style={styles.primaryText}>Calificar</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.skipBtn}
           onPress={() => router.push("/MobileTransportApp/user")}
         >
-          <Text style={styles.skipText}>Omitir por ahora</Text>
+          <Text style={styles.skipText}>Ahora No</Text>
         </TouchableOpacity>
       </ScrollView>
 

@@ -93,6 +93,16 @@ const TripsScreen: React.FC = () => {
 
       {/* Hoja inferior */}
       <View style={styles.bottomSheet}>
+        <View style={styles.startTripButtonWrapper}>
+          <TouchableOpacity
+            style={styles.startTripButton}
+            onPress={() => console.log('Iniciar viaje')}
+          >
+            <MaterialIcons name="play-arrow" size={20} color="white" />
+            <Text style={styles.startTripButtonText}>Iniciar Viaje</Text>
+          </TouchableOpacity>
+        </View>
+
         <ScrollView contentContainerStyle={styles.tripsList}>
           {trips.map((trip, index) => (
             <View key={index} style={styles.tripCard}>
@@ -127,7 +137,7 @@ const TripsScreen: React.FC = () => {
         </ScrollView>
       </View>
 
-      {/* Navegación inferior original */}
+      {/* Navegación inferior */}
       <View style={styles.bottomNavigation}>
         <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/HomeScreen')}>
           <MaterialIcons name="home" size={24} color="#999" />
@@ -168,12 +178,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     paddingTop: spacing.sm,
   },
-  buttonContainer: {
-    alignItems: 'center',
-    marginTop: spacing.md,
-  },
-  startRouteButtonPressed: { transform: [{ scale: 0.97 }], opacity: 0.9 },
-
   bottomSheet: {
     position: 'absolute',
     bottom: 70,
@@ -184,6 +188,25 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 16,
     paddingHorizontal: spacing.md,
     paddingTop: spacing.sm,
+  },
+  startTripButtonWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginBottom: spacing.sm,
+  },
+  startTripButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.success,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+  },
+  startTripButtonText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: '600',
+    marginLeft: 4,
   },
   tripsList: { paddingBottom: 100 },
   tripCard: {
