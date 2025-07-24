@@ -4,7 +4,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { useColorScheme } from '@/constants/useColorScheme';
 import '../global.css';
 
 
@@ -25,6 +25,22 @@ export default function RootLayout() {
         <Stack.Screen name="+not-found" />
         <Stack.Screen name="email-confirmation" options={{ headerShown: false }} />
         <Stack.Screen name="register" options={{ headerShown: false }} />
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="Incidents/IncidentsScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Incidents/header" options={{ headerShown: false }} />
+        <Stack.Screen name="Incidents/IncidentCard" options={{ headerShown: false }} />
+        <Stack.Screen name="Incidents/ReportIncidentSection" options={{ headerShown: false }} />
+        <Stack.Screen name="Califications" options={{ headerShown: false }} />
+        <Stack.Screen name="Califications/ProfileScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/HomeScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/TripsScreen" options={{ headerShown: false }} />  
+        <Stack.Screen name="Drivers/EarningsScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/DocumentsScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/ProfileScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/SettingScreen" options={{ headerShown: false }} />  
+        <Stack.Screen name="Drivers/SupportScreen" options={{ headerShown: false }} />
+        <Stack.Screen name="Drivers/CustomDrawerContent" options={{ headerShown: false }}
+        />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
