@@ -80,6 +80,7 @@ const TripsScreen: React.FC = () => {
           pinColor="tomato"
         />
       </MapView>
+      
 
       {/* Encabezado y botón */}
       <SafeAreaView style={styles.headerWrapper}>
@@ -90,7 +91,6 @@ const TripsScreen: React.FC = () => {
           onSearchPress={handleSearchPress}
         />
       </SafeAreaView>
-
       {/* Hoja inferior */}
       <View style={styles.bottomSheet}>
         <View style={styles.startTripButtonWrapper}>
@@ -102,6 +102,8 @@ const TripsScreen: React.FC = () => {
             <Text style={styles.startTripButtonText}>Iniciar Viaje</Text>
           </TouchableOpacity>
         </View>
+
+      
 
         <ScrollView contentContainerStyle={styles.tripsList}>
           {trips.map((trip, index) => (
