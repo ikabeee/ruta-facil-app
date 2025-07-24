@@ -1,38 +1,31 @@
 import { MaterialIcons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { colors, spacing, typography } from '../Styles/theme';
-import HamburgerMenu from './HamburgerMenu';
+import Header from './Header';
 
 const ProfileScreen: React.FC = () => {
-  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
+  const handleEditPress = () => {
+    console.log('Edit profile pressed');
+    // Aquí podrías navegar a la pantalla de edición
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.headerButton}
-          onPress={toggleMenu}
-        >
-          <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
-        <Text style={styles.title}>Mi Perfil</Text>
-        <TouchableOpacity style={styles.headerButton}>
-          <MaterialIcons name="edit" size={24} color={colors.textSecondary} />
-        </TouchableOpacity>
-      </View>
+      <Header 
+        title="Mi Perfil"
+        showEdit={true}
+        onEditPress={handleEditPress}
+      />
 
       <ScrollView style={styles.content}>
         {/* Profile Info */}
@@ -80,8 +73,8 @@ const ProfileScreen: React.FC = () => {
           <View style={styles.vehicleCard}>
             <MaterialIcons name="directions-car" size={32} color={colors.primary} />
             <View style={styles.vehicleInfo}>
-              <Text style={styles.vehicleModel}>Toyota Corolla 2020</Text>
-              <Text style={styles.vehicleDetails}>Blanco • ABC-123</Text>
+              <Text style={styles.vehicleModel}>Unidad 44</Text>
+              <Text style={styles.vehicleDetails}>Matricula : ABC-123</Text>
             </View>
             <TouchableOpacity>
               <MaterialIcons name="chevron-right" size={24} color={colors.textSecondary} />
@@ -119,11 +112,48 @@ const ProfileScreen: React.FC = () => {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Hamburger Menu Overlay */}
-      <HamburgerMenu 
-        isVisible={isMenuVisible} 
-        onClose={() => setIsMenuVisible(false)} 
-      />
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNavigation}>
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/HomeScreen')}
+        >
+          <MaterialIcons name="home" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Inicio</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/TripsScreen')}
+        >
+          <MaterialIcons name="directions-car" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Rutas</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/EarningsScreen')}
+        >
+          <MaterialIcons name="local-taxi" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Unidad</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/ProfileScreen')}
+        >
+          <MaterialIcons name="person" size={24} color="#20c997" />
+          <Text style={[styles.navText, { color: "#20c997" }]}>Perfil</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Floating Action Button for Incidents */}
+      <TouchableOpacity 
+        style={styles.floatingButton}
+        onPress={() => router.push('/Incidents/IncidentsScreen')}
+      >
+        <MaterialIcons name="warning" size={28} color="white" />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -310,6 +340,42 @@ const styles = StyleSheet.create({
     color: colors.error,
     fontWeight: typography.weights.medium,
     marginLeft: spacing.sm,
+  },
+  // Bottom Navigation Styles
+  bottomNavigation: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    paddingVertical: 8,
+    paddingBottom: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+    elevation: 8,
+  },
+  navItem: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 4,
+  },
+  navText: {
+    fontSize: 12,
+    marginTop: 2,
+    fontWeight: '500',
+  },
+  floatingButton: {
+    position: 'absolute',
+    bottom: 90,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#FF4444',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
 });
 

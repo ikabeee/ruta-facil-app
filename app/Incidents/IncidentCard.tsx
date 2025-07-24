@@ -1,6 +1,6 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface Incident {
   id: string;
@@ -23,7 +23,7 @@ const IncidentCard: React.FC<IncidentCardProps> = ({ incident, onPress }) => {
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.header}>
         <View style={styles.titleRow}>
-          <Ionicons 
+          <MaterialIcons 
             name={incident.icon as any} 
             size={20} 
             color={incident.statusColor} 

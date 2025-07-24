@@ -2,10 +2,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import HamburgerMenu from '../Drivers/HamburgerMenu';
-import { colors, spacing, typography } from '../Styles/theme';
+import Header from '../Drivers/Header';
 import IncidentCard from './IncidentCard';
-import IncidentsHeader from './IncidentsHeader';
 import ReportIncidentSection from './ReportIncidentSection';
 
 // Mock data - replace with your API calls
@@ -45,32 +43,21 @@ const IncidentsScreen: React.FC<IncidentsScreenProps> = ({
   onIncidentPress,
 }) => {
   const router = useRouter();
-  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
 
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
+  const handleSearchPress = () => {
+    console.log('Search pressed in Incidencias');
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header with Menu Button */}
-      <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.headerButton}
-          onPress={toggleMenu}
-        >
-          <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
-        
-        <View style={styles.headerCenter}>
-          <Text style={styles.headerTitle}>Incidencias</Text>
-        </View>
-        
-        <View style={styles.headerButton} />
-      </View>
+      <Header 
+        title="Incidencias"
+        showSearch={true}
+        onSearchPress={handleSearchPress}
+      />
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <IncidentsHeader onReportPress={onReportIncident} />        <View style={styles.incidentsList}>
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>        
+        <View style={styles.incidentsList}>
           {incidents.map((incident) => (
             <IncidentCard
               key={incident.id}
@@ -83,11 +70,48 @@ const IncidentsScreen: React.FC<IncidentsScreenProps> = ({
         <ReportIncidentSection />
       </ScrollView>
 
-      {/* Hamburger Menu Overlay */}
-      <HamburgerMenu 
-        isVisible={isMenuVisible} 
-        onClose={() => setIsMenuVisible(false)} 
-      />
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNavigation}>
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/HomeScreen')}
+        >
+          <MaterialIcons name="home" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Inicio</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/TripsScreen')}
+        >
+          <MaterialIcons name="directions-car" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Rutas</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/EarningsScreen')}
+        >
+          <MaterialIcons name="local-taxi" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Unidad</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/ProfileScreen')}
+        >
+          <MaterialIcons name="person" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Perfil</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Floating Action Button for Incidents - Active State */}
+      <TouchableOpacity 
+        style={[styles.floatingButton, { backgroundColor: '#20c997' }]}
+        onPress={() => router.push('/Incidents/IncidentsScreen')}
+      >
+        <MaterialIcons name="warning" size={28} color="white" />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -95,40 +119,49 @@ const IncidentsScreen: React.FC<IncidentsScreenProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    backgroundColor: colors.background,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  headerButton: {
-    padding: spacing.xs,
-    borderRadius: spacing.xs,
-    width: 40,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  headerCenter: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: typography.sizes.lg,
-    fontWeight: typography.weights.bold,
-    color: colors.textPrimary,
+    backgroundColor: '#F5F5F5',
   },
   content: {
     flex: 1,
   },
   incidentsList: {
     paddingHorizontal: 20,
+  },
+  // Bottom Navigation Styles
+  bottomNavigation: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    paddingVertical: 8,
+    paddingBottom: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+    elevation: 8,
+  },
+  navItem: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 4,
+  },
+  navText: {
+    fontSize: 12,
+    marginTop: 2,
+    fontWeight: '500',
+  },
+  floatingButton: {
+    position: 'absolute',
+    bottom: 90,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#FF4444',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
 });
 
