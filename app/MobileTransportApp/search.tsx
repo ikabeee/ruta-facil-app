@@ -8,7 +8,9 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import {
   Landmark,
   Home,
@@ -16,12 +18,15 @@ import {
   Heart,
   Send,
   MapPin,
-  AlertTriangle, // icono agregado
+  AlertTriangle,
 } from "lucide-react-native";
+
+const { width, height } = Dimensions.get("window");
 
 export default function BuscarDestinoScreen() {
   const router = useRouter();
   const [search, setSearch] = useState("");
+
   const destinos = [
     "Plaza Principal",
     "Mercado de Artesanías",
@@ -41,13 +46,13 @@ export default function BuscarDestinoScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Encabezado sin icono de menú */}
+      {/* Encabezado */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Landmark size={20} color="#fff" style={{ marginRight: 8 }} />
           <View>
-            <Text style={styles.headerTitle}>Transporte Mágico</Text>
-            <Text style={styles.headerSubtitle}>San Miguel de los Milagros</Text>
+            <Text style={styles.headerTitle}>Ruta Facil</Text>
+            <Text style={styles.headerSubtitle}>Huauchinango, Puebla</Text>
           </View>
         </View>
       </View>
@@ -61,6 +66,25 @@ export default function BuscarDestinoScreen() {
           value={search}
           onChangeText={setSearch}
         />
+      </View>
+
+      {/* Mapa */}
+      <View style={styles.mapContainer}>
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: 20.1743,
+            longitude: -98.0503,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          }}
+        >
+          <Marker
+            coordinate={{ latitude: 20.1743, longitude: -98.0503 }}
+            title="Huauchinango"
+            description="Centro"
+          />
+        </MapView>
       </View>
 
       {/* Lista de destinos */}
@@ -83,43 +107,44 @@ export default function BuscarDestinoScreen() {
         ))}
       </ScrollView>
 
-      {/* Barra de navegación inferior */}<View style={styles.navbar}>
-  <TouchableOpacity
-    style={styles.navItem}
-    onPress={() => router.push("/MobileTransportApp/user")}
-  >
-    <Home size={24} color="#000000ff" />
-    <Text style={styles.navText}>Inicio</Text>
-  </TouchableOpacity>
-  <TouchableOpacity
-    style={styles.navItem}
-    onPress={() => router.push("/MobileTransportApp/search")}
-  >
-    <Search size={24} color="#20c997" />
-    <Text style={styles.navText}>Buscar</Text>
-  </TouchableOpacity>
-  <TouchableOpacity
-    style={styles.navItem}
-    onPress={() => router.push("/MobileTransportApp/favoritos")}
-  >
-    <Heart size={24} color="#000000ff" />
-    <Text style={styles.navText}>Favoritos</Text>
-  </TouchableOpacity>
-  <TouchableOpacity
-    style={styles.navItem}
-    onPress={() => router.push("/MobileTransportApp/routes")}
-  >
-    <Send size={24} color="#000000ff" />
-    <Text style={styles.navText}>Seguir</Text>
-  </TouchableOpacity>
-  <TouchableOpacity
-    style={styles.navItem}
-    onPress={() => router.push("/MobileTransportApp/incidents")}
-  >
-    <AlertTriangle size={24} color="#000000ff" />
-    <Text style={[styles.navText, { color: "#000000ff" }]}>Incidentes</Text>
-  </TouchableOpacity>
-</View>
+      {/* Barra de navegación inferior */}
+      <View style={styles.navbar}>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/user")}
+        >
+          <Home size={24} color="#000000ff" />
+          <Text style={styles.navText}>Inicio</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/search")}
+        >
+          <Search size={24} color="#20c997" />
+          <Text style={styles.navText}>Buscar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/favoritos")}
+        >
+          <Heart size={24} color="#000000ff" />
+          <Text style={styles.navText}>Favoritos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/routes")}
+        >
+          <Send size={24} color="#000000ff" />
+          <Text style={styles.navText}>Seguir</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.navItem}
+          onPress={() => router.push("/MobileTransportApp/incidents")}
+        >
+          <AlertTriangle size={24} color="#000000ff" />
+          <Text style={styles.navText}>Incidentes</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -131,7 +156,6 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "#20c997",
     padding: 16,
@@ -146,7 +170,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   headerSubtitle: {
-    color: "#ffe4e6",
+    color: "white",
     fontSize: 12,
   },
   searchContainer: {
@@ -159,6 +183,15 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 14,
     color: "#111827",
+  },
+  mapContainer: {
+    height: height * 0.25,
+    marginHorizontal: 12,
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
   },
   sectionTitle: {
     fontWeight: "bold",

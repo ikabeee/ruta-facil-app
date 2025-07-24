@@ -29,8 +29,8 @@ const TripCompletedScreen = () => {
         <View style={styles.headerLeft}>
           <Landmark size={20} color="#fff" style={{ marginRight: 8 }} />
           <View>
-            <Text style={styles.headerTitle}>Transporte Mágico</Text>
-            <Text style={styles.headerSubtitle}>San Miguel de los Milagros</Text>
+            <Text style={styles.headerTitle}>Ruta Fácil</Text>
+            <Text style={styles.headerSubtitle}>Huauchinango, Puebla</Text>
           </View>
         </View>
       </View>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   headerLeft: { flexDirection: "row", alignItems: "center" },
   headerTitle: { color: "#fff", fontWeight: "bold", fontSize: 16 },
-  headerSubtitle: { color: "#ffe4e6", fontSize: 12 },
+  headerSubtitle: { color: "white", fontSize: 12 },
   scroll: {
     alignItems: "center",
     padding: 20,

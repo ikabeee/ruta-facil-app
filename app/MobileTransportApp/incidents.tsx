@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   headerLeft: { flexDirection: "row", alignItems: "center" },
   headerTitle: { color: "#fff", fontWeight: "bold", fontSize: 16 },
-  headerSubtitle: { color: "#ffe4e6", fontSize: 12 },
+  headerSubtitle: { color: "white", fontSize: 12 },
   sectionTitle: {
     fontWeight: "bold",
     fontSize: 18,

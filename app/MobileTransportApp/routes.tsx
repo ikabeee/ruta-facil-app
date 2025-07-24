@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   headerSubtitle: {
-    color: "#ffe4e6",
+    color: "white",
     fontSize: 12,
   },
   bottomPanel: {

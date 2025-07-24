@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import {
   Landmark,
-  Menu,
   Clock,
   DollarSign,
   Home,
@@ -30,11 +29,11 @@ export default function FavoritosScreen() {
         <View style={styles.headerLeft}>
           <Landmark size={20} color="#fff" style={{ marginRight: 8 }} />
           <View>
-            <Text style={styles.headerTitle}>Transporte Mágico</Text>
-            <Text style={styles.headerSubtitle}>San Miguel de los Milagros</Text>
+            <Text style={styles.headerTitle}>Ruta Facil</Text>
+            <Text style={styles.headerSubtitle}>Huauchinango, Puebla</Text>
           </View>
         </View>
-        <Menu size={20} color="#fff" />
+        {/* Ícono de menú eliminado */}
       </View>
 
       {/* Título */}
@@ -137,7 +136,6 @@ export default function FavoritosScreen() {
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
   header: {
@@ -149,7 +147,7 @@ const styles = StyleSheet.create({
   },
   headerLeft: { flexDirection: "row", alignItems: "center" },
   headerTitle: { color: "#fff", fontWeight: "bold", fontSize: 16 },
-  headerSubtitle: { color: "#ffe4e6", fontSize: 12 },
+  headerSubtitle: { color: "white", fontSize: 12 },
   sectionTitle: {
     fontWeight: "bold",
     fontSize: 18,
