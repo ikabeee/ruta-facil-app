@@ -2,8 +2,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Header from '../Drivers/Header';
 import IncidentCard from './IncidentCard';
-import IncidentsHeader from './IncidentsHeader';
 import ReportIncidentSection from './ReportIncidentSection';
 
 // Mock data - replace with your API calls
@@ -44,22 +44,19 @@ const IncidentsScreen: React.FC<IncidentsScreenProps> = ({
 }) => {
   const router = useRouter();
 
+  const handleSearchPress = () => {
+    console.log('Search pressed in Incidencias');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header with Menu Button */}
-      <View style={styles.header}>
-        <View style={styles.headerButton} />
-        
-        <View style={styles.headerCenter}>
-          <Text style={styles.headerTitle}>Incidencias</Text>
-        </View>
-        
-        <View style={styles.headerButton} />
-      </View>
+      <Header 
+        title="Incidencias"
+        showSearch={true}
+        onSearchPress={handleSearchPress}
+      />
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <IncidentsHeader onReportPress={onReportIncident} />
-        
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>        
         <View style={styles.incidentsList}>
           {incidents.map((incident) => (
             <IncidentCard
@@ -101,14 +98,6 @@ const IncidentsScreen: React.FC<IncidentsScreenProps> = ({
         
         <TouchableOpacity 
           style={styles.navItem}
-          onPress={() => router.replace('/Drivers/DocumentsScreen')}
-        >
-          <MaterialIcons name="description" size={24} color="#666" />
-          <Text style={[styles.navText, { color: "#666" }]}>Docs</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.navItem}
           onPress={() => router.replace('/Drivers/ProfileScreen')}
         >
           <MaterialIcons name="person" size={24} color="#666" />
@@ -131,30 +120,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
-  },
-  header: {
-    backgroundColor: '#20c997',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  headerButton: {
-    padding: 4,
-    width: 40,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  headerCenter: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
   },
   content: {
     flex: 1,

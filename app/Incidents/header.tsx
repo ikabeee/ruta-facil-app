@@ -1,27 +1,40 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface HeaderProps {
-  driverStatus?: 'Activo' | 'Inactivo';
-  onStatusChange?: () => void;
+  title?: 'Mi Perfil' | 'Mis Rutas' | 'Mis Documentos' | 'Unidad' | 'Unidad Asignada' | 'Incidencias';
+  showSearch?: boolean;
+  onSearchPress?: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ 
-  driverStatus = 'Inactivo',
-  onStatusChange 
+  title = "Mis Rutas",
+  showSearch = true,
+  onSearchPress
 }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Ruta Facil </Text>
-      <View style={[
-        styles.statusBadge, 
-        driverStatus === 'Activo' ? styles.active : styles.inactive
-      ]}>
-        <View style={[
-          styles.statusDot,
-          driverStatus === 'Activo' ? styles.activeDot : styles.inactiveDot
-        ]} />
-        <Text style={styles.statusText}>{driverStatus}</Text>
+      <View style={styles.leftSection}>
+        {/* Espacio vacío para centrar el título */}
+      </View>
+      
+      <Text style={styles.title}>{title}</Text>
+      
+      <View style={styles.rightSection}>
+        {showSearch && (
+          <TouchableOpacity 
+            style={styles.searchButton}
+            onPress={onSearchPress}
+            activeOpacity={0.8}
+          >
+            <MaterialIcons 
+              name="search" 
+              size={24} 
+              color="white" 
+            />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -29,47 +42,30 @@ const Header: React.FC<HeaderProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#20c997',
     paddingHorizontal: 20,
     paddingVertical: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  leftSection: {
+    flex: 1,
+  },
   title: {
     color: 'white',
     fontSize: 18,
     fontWeight: '600',
+    textAlign: 'center',
+    flex: 2,
   },
-  statusBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+  rightSection: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  searchButton: {
+    padding: 8,
     borderRadius: 20,
-  },
-  active: {
-    backgroundColor: 'rgba(76, 175, 80, 0.2)',
-  },
-  inactive: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-  },
-  statusDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginRight: 6,
-  },
-  activeDot: {
-    backgroundColor: '#4CAF50',
-  },
-  inactiveDot: {
-    backgroundColor: '#FFF',
-  },
-  statusText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: '500',
   },
 });
 

@@ -10,19 +10,22 @@ import {
   View
 } from 'react-native';
 import { colors, spacing, typography } from '../Styles/theme';
+import Header from './Header';
 
 const ProfileScreen: React.FC = () => {
 
+  const handleEditPress = () => {
+    console.log('Edit profile pressed');
+    // Aquí podrías navegar a la pantalla de edición
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.headerButton} />
-        <Text style={styles.title}>Mi Perfil</Text>
-        <TouchableOpacity style={styles.headerButton}>
-          <MaterialIcons name="edit" size={24} color={colors.textSecondary} />
-        </TouchableOpacity>
-      </View>
+      <Header 
+        title="Mi Perfil"
+        showEdit={true}
+        onEditPress={handleEditPress}
+      />
 
       <ScrollView style={styles.content}>
         {/* Profile Info */}
@@ -133,14 +136,6 @@ const ProfileScreen: React.FC = () => {
         >
           <MaterialIcons name="local-taxi" size={24} color="#666" />
           <Text style={[styles.navText, { color: "#666" }]}>Unidad</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.navItem}
-          onPress={() => router.replace('/Drivers/DocumentsScreen')}
-        >
-          <MaterialIcons name="description" size={24} color="#666" />
-          <Text style={[styles.navText, { color: "#666" }]}>Docs</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 

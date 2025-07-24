@@ -83,9 +83,10 @@ const HomeScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header 
-        driverName="Carlos Mendoza"
-        isOnline={isOnline}
-        onToggleStatus={handleToggleStatus}
+        title="Mis Rutas"
+        showSearch={true}
+        showLogo={false}
+        onSearchPress={() => console.log('Search pressed')}
       />
       
       <ScrollView style={styles.content}>

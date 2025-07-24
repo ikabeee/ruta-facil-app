@@ -52,10 +52,10 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
             <View style={styles.statIconContainer}>
-              <MaterialIcons name="attach-money" size={24} color="#20c997" />
+              <MaterialIcons name="local-taxi" size={24} color="#20c997" />
             </View>
-            <Text style={styles.statLabel}>Ganancias Hoy</Text>
-            <Text style={styles.statValue}>$125.50</Text>
+            <Text style={styles.statLabel}>Unidad Designada</Text>
+            <Text style={styles.statValue}>Unit-042</Text>
           </View>
           
           <View style={styles.statCard}>
@@ -108,7 +108,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
               <Text style={styles.routeTo}>Zona Rosa</Text>
             </View>
             <View style={styles.routeDetailsRow}>
-              <Text style={styles.routeEarnings}>$15.50</Text>
               <View style={styles.routeRating}>
                 <MaterialIcons name="star" size={16} color="#FFD700" />
                 <Text style={styles.ratingText}>5</Text>
@@ -130,7 +129,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
               <Text style={styles.routeTo}>Hotel Plaza</Text>
             </View>
             <View style={styles.routeDetailsRow}>
-              <Text style={styles.routeEarnings}>$28.75</Text>
               <View style={styles.routeRating}>
                 <MaterialIcons name="star" size={16} color="#FFD700" />
                 <Text style={styles.ratingText}>4</Text>
@@ -152,7 +150,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
               <Text style={styles.routeTo}>Residencial Norte</Text>
             </View>
             <View style={styles.routeDetailsRow}>
-              <Text style={styles.routeEarnings}>$12.25</Text>
               <View style={styles.routeRating}>
                 <MaterialIcons name="star" size={16} color="#FFD700" />
                 <Text style={styles.ratingText}>5</Text>
@@ -183,10 +180,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/EarningsScreen')}>
           <MaterialIcons name="local-taxi" size={24} color="#666" />
           <Text style={styles.navText}>Unidad</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/DocumentsScreen')}>
-          <MaterialIcons name="description" size={24} color="#666" />
-          <Text style={styles.navText}>Docs</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/ProfileScreen')}>
           <MaterialIcons name="person" size={24} color="#666" />
@@ -419,14 +412,9 @@ const styles = StyleSheet.create({
   },
   routeDetailsRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     marginTop: 8,
-  },
-  routeEarnings: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#20c997',
   },
   routeRating: {
     flexDirection: 'row',

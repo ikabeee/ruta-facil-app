@@ -10,9 +10,14 @@ import {
   View,
 } from 'react-native';
 import { colors, spacing, typography } from '../Styles/theme';
+import Header from './Header';
 
 const TripsScreen: React.FC = () => {
   const [isButtonPressed, setIsButtonPressed] = React.useState(false);
+
+  const handleSearchPress = () => {
+    console.log('Search pressed in Mis Rutas');
+  };
 
   const filters = ['Todos (12)', 'Hoy (3)', 'Esta semana (8)', 'Este mes (12)'];
   
@@ -51,17 +56,12 @@ const TripsScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.logoContainer}>
-          <MaterialIcons name="route" size={20} color="white" />
-          <Text style={styles.logoTitle}>Ruta Fácil</Text>
-        </View>
-        <Text style={styles.title}>Mis Rutas</Text>
-        <TouchableOpacity style={{ padding: spacing.sm }}>
-          <MaterialIcons name="search" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
+      <Header 
+        title="Mis Rutas"
+        showSearch={true}
+        showLogo={false}
+        onSearchPress={handleSearchPress}
+      />
 
       {/* Botón Empezar Ruta */}
       <View style={styles.buttonContainer}>
@@ -145,14 +145,6 @@ const TripsScreen: React.FC = () => {
         
         <TouchableOpacity 
           style={styles.navItem}
-          onPress={() => router.replace('/Drivers/DocumentsScreen')}
-        >
-          <MaterialIcons name="description" size={24} color="#666" />
-          <Text style={[styles.navText, { color: "#666" }]}>Docs</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.navItem}
           onPress={() => router.replace('/Drivers/ProfileScreen')}
         >
           <MaterialIcons name="person" size={24} color="#666" />
@@ -176,29 +168,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  header: {
-    backgroundColor: '#20c997',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  logoContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  logoTitle: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginLeft: 8,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-  },
   buttonContainer: {
     paddingVertical: spacing.lg,
     paddingHorizontal: spacing.lg,
@@ -211,12 +180,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
     textAlign: 'center',
   },
-  centerContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: spacing.lg,
-  },
   startRouteButton: {
     width: 150,
     height: 150,
@@ -224,25 +187,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF4444',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 16, // Sombra más fuerte en Android
+    elevation: 16,
     shadowColor: '#FF4444',
     shadowOffset: {
       width: 0,
-      height: 8, // Sombra más grande
+      height: 8,
     },
-    shadowOpacity: 0.5, // Más opacidad
-    shadowRadius: 16, // Radio más grande
+    shadowOpacity: 0.5,
+    shadowRadius: 16,
     paddingHorizontal: spacing.sm,
   },
   startRouteButtonPressed: {
-    elevation: 24, // Sombra aún más prominente cuando se presiona
+    elevation: 24,
     shadowOffset: {
       width: 0,
       height: 12,
     },
-    shadowOpacity: 0.7, // Más opacidad
-    shadowRadius: 20, // Radio más grande
-    transform: [{ scale: 0.98 }], // Ligeramente más pequeño cuando se presiona
+    shadowOpacity: 0.7,
+    shadowRadius: 20,
+    transform: [{ scale: 0.98 }],
   },
   routeAssignedText: {
     fontSize: typography.sizes.xs,
@@ -257,13 +220,6 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     marginBottom: spacing.xs,
-  },
-  startRouteText: {
-    fontSize: typography.sizes.md,
-    fontWeight: typography.weights.bold,
-    color: 'white',
-    marginBottom: spacing.xs,
-    textAlign: 'center',
   },
   buttonIcon: {
     marginTop: spacing.xs,

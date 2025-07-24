@@ -1,51 +1,76 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import {
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 // Types
 interface HeaderProps {
-  driverName: string;
-  isOnline: boolean;
-  onToggleStatus: () => void;
+  title?: 'Mi Perfil' | 'Mis Rutas' | 'Mis Documentos' | 'Unidad' | 'Unidad Asignada' | 'Incidencias';
+  showSearch?: boolean;
+  showEdit?: boolean;
+  showLogo?: boolean;
+  onSearchPress?: () => void;
+  onEditPress?: () => void;
 }
 
 // Styles
-import { colors, spacing, typography } from '../Styles/theme';
+import { spacing, typography } from '../Styles/theme';
 
 const Header: React.FC<HeaderProps> = ({ 
-  driverName, 
-  isOnline, 
-  onToggleStatus 
+  title = "Mis Rutas",
+  showSearch = false,
+  showEdit = false,
+  showLogo = false,
+  onSearchPress,
+  onEditPress
 }) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftSection}>
-        <Text style={styles.greeting}>¡Hola!</Text>
-        <Text style={styles.driverName}>{driverName}</Text>
+        {showLogo && (
+          <View style={styles.logoContainer}>
+            <MaterialIcons name="route" size={20} color="white" />
+            <Text style={styles.logoTitle}>Ruta Fácil</Text>
+          </View>
+        )}
       </View>
       
-      <TouchableOpacity 
-        style={[
-          styles.statusButton,
-          { backgroundColor: isOnline ? colors.success : colors.error }
-        ]}
-        onPress={onToggleStatus}
-        activeOpacity={0.8}
-      >
-        <MaterialIcons 
-          name={isOnline ? 'radio-button-checked' : 'radio-button-unchecked'} 
-          size={20} 
-          color="white" 
-        />
-        <Text style={styles.statusText}>
-          {isOnline ? 'En Línea' : 'Desconectado'}
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>{title}</Text>
+      </View>
+      
+      <View style={styles.rightSection}>
+        {showSearch && (
+          <TouchableOpacity 
+            style={styles.actionButton}
+            onPress={onSearchPress}
+            activeOpacity={0.8}
+          >
+            <MaterialIcons 
+              name="search" 
+              size={24} 
+              color="white" 
+            />
+          </TouchableOpacity>
+        )}
+        {showEdit && (
+          <TouchableOpacity 
+            style={styles.actionButton}
+            onPress={onEditPress}
+            activeOpacity={0.8}
+          >
+            <MaterialIcons 
+              name="edit" 
+              size={24} 
+              color="white" 
+            />
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 };
@@ -53,38 +78,53 @@ const Header: React.FC<HeaderProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: spacing.lg,
-    backgroundColor: colors.surface,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.md,
+    backgroundColor: '#20c997',
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+    position: 'relative',
   },
   leftSection: {
+    position: 'absolute',
+    left: spacing.lg,
+    width: 60,
+  },
+  titleContainer: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  greeting: {
-    fontSize: typography.sizes.sm,
-    color: colors.textSecondary,
-  },
-  driverName: {
+  title: {
     fontSize: typography.sizes.lg,
     fontWeight: typography.weights.bold,
-    color: colors.textPrimary,
+    color: 'white',
+    textAlign: 'center',
   },
-  statusButton: {
+  rightSection: {
+    position: 'absolute',
+    right: spacing.lg,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: 20,
   },
-  statusText: {
+  actionButton: {
+    padding: spacing.sm,
+    borderRadius: 20,
+    marginLeft: spacing.xs,
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logoTitle: {
     color: 'white',
-    fontWeight: typography.weights.medium,
+    fontSize: 16,
+    fontWeight: '600',
     marginLeft: spacing.xs,
   },
 });

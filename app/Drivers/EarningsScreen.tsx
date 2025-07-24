@@ -10,22 +10,21 @@ import {
   View,
 } from 'react-native';
 import { colors, spacing, typography } from '../Styles/theme';
+import Header from './Header';
 
 const EarningsScreen: React.FC = () => {
 
+  const handleSearchPress = () => {
+    console.log('Search pressed in Unidad Asignada');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <View style={styles.logoContainer}>
-          <MaterialIcons name="route" size={20} color="white" />
-          <Text style={styles.logoTitle}>Ruta Fácil</Text>
-        </View>
-        <Text style={styles.title}>Unidad Asignada</Text>
-        <TouchableOpacity style={styles.headerButton}>
-          <MaterialIcons name="file-download" size={24} color="white" />
-        </TouchableOpacity>
-      </View>
+      <Header 
+        title="Unidad Asignada"
+        showSearch={true}
+        onSearchPress={handleSearchPress}
+      />
 
       <ScrollView style={styles.content}>
         {/* Summary Cards */}
@@ -111,14 +110,6 @@ const EarningsScreen: React.FC = () => {
         >
           <MaterialIcons name="local-taxi" size={24} color="#20c997" />
           <Text style={[styles.navText, { color: "#20c997" }]}>Unidad</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.navItem}
-          onPress={() => router.replace('/Drivers/DocumentsScreen')}
-        >
-          <MaterialIcons name="description" size={24} color="#666" />
-          <Text style={[styles.navText, { color: "#666" }]}>Docs</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 

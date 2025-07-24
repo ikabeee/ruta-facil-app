@@ -3,17 +3,39 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface IncidentsHeaderProps {
-  onReportPress?: () => void;
+  title?: 'Mi Perfil' | 'Mis Rutas' | 'Mis Documentos' | 'Unidad' | 'Unidad Asignada' | 'Incidencias';
+  showSearch?: boolean;
+  onSearchPress?: () => void;
 }
 
-const IncidentsHeader: React.FC<IncidentsHeaderProps> = ({ onReportPress }) => {
+const IncidentsHeader: React.FC<IncidentsHeaderProps> = ({ 
+  title = "Mis Rutas",
+  showSearch = true,
+  onSearchPress
+}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Incidencias</Text>
-      <TouchableOpacity style={styles.reportButton} onPress={onReportPress}>
-        <MaterialIcons name="add" size={20} color="white" />
-        <Text style={styles.reportButtonText}>Reportar</Text>
-      </TouchableOpacity>
+      <View style={styles.leftSection}>
+        {/* Espacio vacío para centrar el título */}
+      </View>
+      
+      <Text style={styles.title}>{title}</Text>
+      
+      <View style={styles.rightSection}>
+        {showSearch && (
+          <TouchableOpacity 
+            style={styles.searchButton}
+            onPress={onSearchPress}
+            activeOpacity={0.8}
+          >
+            <MaterialIcons 
+              name="search" 
+              size={24} 
+              color="white" 
+            />
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   );
 };
@@ -25,25 +47,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 20,
+    backgroundColor: '#20c997',
+  },
+  leftSection: {
+    flex: 1,
   },
   title: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#333',
-  },
-  reportButton: {
-    backgroundColor: '#20c997',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-  },
-  reportButtonText: {
     color: 'white',
-    fontSize: 14,
-    fontWeight: '500',
-    marginLeft: 4,
+    textAlign: 'center',
+    flex: 2,
+  },
+  rightSection: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+  searchButton: {
+    padding: 8,
+    borderRadius: 20,
   },
 });
 
