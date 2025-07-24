@@ -2,6 +2,15 @@ apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
+android {
+    // Deshabilitar el NDK para evitar problemas
+    externalNativeBuild {
+        ndkBuild {
+            // No definir path para evitar que se compile código nativo
+        }
+    }
+}
+
 def projectRoot = rootDir.getAbsoluteFile().getParentFile().getAbsolutePath()
 
 /**
