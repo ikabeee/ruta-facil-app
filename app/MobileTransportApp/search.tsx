@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker } from "../../components/map/MapView";
 import {
   Landmark,
   Home,

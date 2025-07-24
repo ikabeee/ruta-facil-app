@@ -38,8 +38,13 @@ export default function RootLayout() {
         <Stack.Screen name="Drivers/ProfileScreen" options={{ headerShown: false }} />
         <Stack.Screen name="Drivers/SettingScreen" options={{ headerShown: false }} />  
         <Stack.Screen name="Drivers/SupportScreen" options={{ headerShown: false }} />
-        <Stack.Screen name="Drivers/CustomDrawerContent" options={{ headerShown: false }}
-        />
+        <Stack.Screen name="Drivers/CustomDrawerContent" options={{ headerShown: false }} />
+        <Stack.Screen name="MobileTransportApp/user" options={{ headerShown: false }} />
+        <Stack.Screen name="MobileTransportApp/search" options={{ headerShown: false }} />
+        <Stack.Screen name="MobileTransportApp/routes" options={{ headerShown: false }} />
+        <Stack.Screen name="MobileTransportApp/favoritos" options={{ headerShown: false }} />
+        <Stack.Screen name="MobileTransportApp/incidents" options={{ headerShown: false }} />
+        <Stack.Screen name="MobileTransportApp/qualifications" options={{ headerShown: false }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
