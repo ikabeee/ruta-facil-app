@@ -1,6 +1,6 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface IncidentsHeaderProps {
   onReportPress?: () => void;
@@ -11,7 +11,7 @@ const IncidentsHeader: React.FC<IncidentsHeaderProps> = ({ onReportPress }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Incidencias</Text>
       <TouchableOpacity style={styles.reportButton} onPress={onReportPress}>
-        <Ionicons name="add" size={20} color="white" />
+        <MaterialIcons name="add" size={20} color="white" />
         <Text style={styles.reportButtonText}>Reportar</Text>
       </TouchableOpacity>
     </View>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   reportButton: {
-    backgroundColor: '#333',
+    backgroundColor: '#20c997',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,

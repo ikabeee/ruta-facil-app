@@ -2,11 +2,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { colors, spacing, typography } from '../Styles/theme';
 
@@ -18,7 +18,7 @@ interface HamburgerMenuProps {
 const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ isVisible, onClose }) => {
   const navigateToScreen = (screenPath: string) => {
     onClose();
-    router.push(screenPath as any);
+    router.replace(screenPath as any);
   };
 
   if (!isVisible) return null;
@@ -48,13 +48,12 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ isVisible, onClose }) => 
         {/* Menu Items */}
         <ScrollView style={styles.menuContent}>
           {[
-            { title: 'Inicio', icon: 'home', route: '/Drivers/HomeScreen' },
-            { title: 'Rutas', icon: 'directions-car', route: '/Drivers/TripsScreen' },
-            { title: 'Ganancias', icon: 'attach-money', route: '/Drivers/EarningsScreen' },
-            { title: 'Documentos', icon: 'description', route: '/Drivers/DocumentsScreen' },
-            { title: 'Perfil', icon: 'person', route: '/Drivers/ProfileScreen' },
-            { title: 'Configuración', icon: 'settings', route: '/Drivers/SettingScreen' },
-            { title: 'Soporte', icon: 'help', route: '/Drivers/SupportScreen' },
+            { title: 'Inicio', icon: 'home', route: 'Drivers/HomeScreen' },
+            { title: 'Rutas', icon: 'directions-car', route: 'Drivers/TripsScreen' },
+            { title: 'Unidad Asignada', icon: 'local-taxi', route: 'Drivers/EarningsScreen' },
+            { title: 'Documentos', icon: 'description', route: 'Drivers/DocumentsScreen' },
+            { title: 'Perfil', icon: 'person', route: 'Drivers/ProfileScreen' },
+            { title: 'Configuración', icon: 'settings', route: 'Drivers/SettingScreen' },
           ].map((item, index) => (
             <TouchableOpacity
               key={index}
@@ -71,9 +70,9 @@ const HamburgerMenu: React.FC<HamburgerMenuProps> = ({ isVisible, onClose }) => 
             <Text style={styles.menuSectionTitle}>ACCIONES RÁPIDAS</Text>
             <TouchableOpacity 
               style={[styles.menuQuickAction, { backgroundColor: colors.error }]}
-              onPress={() => navigateToScreen('/Incidents/IncidentsScreen')}
+              onPress={() => navigateToScreen('Incidents/IncidentsScreen')}
             >
-              <MaterialIcons name="emergency" size={20} color="white" />
+              <MaterialIcons name="warning" size={20} color="white" />
               <Text style={styles.menuQuickActionText}>Incidencia</Text>
             </TouchableOpacity>
           </View>
@@ -175,19 +174,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    borderBottomColor: 'rgba(0,0,0,0.1)', // Línea más transparente
   },
   menuText: {
     fontSize: typography.sizes.md,
     color: colors.textPrimary,
     marginLeft: spacing.md,
-    fontWeight: typography.weights.medium,
+    fontWeight: typography.weights.bold, // Cambiado a bold para hacer títulos más prominentes
   },
   menuQuickActions: {
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.lg,
     borderTopWidth: 1,
-    borderTopColor: colors.border,
+    borderTopColor: 'rgba(0,0,0,0.1)', // Línea más transparente
     marginTop: spacing.md,
   },
   menuSectionTitle: {
@@ -220,7 +219,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     backgroundColor: colors.surface,
     borderTopWidth: 1,
-    borderTopColor: colors.border,
+    borderTopColor: 'rgba(0,0,0,0.1)', // Línea más transparente
   },
   menuLogoutText: {
     fontSize: typography.sizes.md,

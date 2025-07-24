@@ -2,28 +2,21 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
 import {
-    Alert,
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { colors, spacing, typography } from '../Styles/theme';
-import HamburgerMenu from './HamburgerMenu';
 
 interface DocumentsScreenProps {
   // No navigation props needed for expo-router
 }
 
 const DocumentsScreen: React.FC<DocumentsScreenProps> = () => {
-  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
-  };
-
   const handleUploadDocument = (docType: string) => {
     Alert.alert('Subir Documento', `Subiendo ${docType}...`);
   };
@@ -36,12 +29,7 @@ const DocumentsScreen: React.FC<DocumentsScreenProps> = () => {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={toggleMenu}
-        >
-          <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
+        <View style={styles.backButton} />
         <Text style={styles.title}>Mis Documentos</Text>
         <TouchableOpacity 
           style={styles.backButton}
@@ -221,11 +209,56 @@ const DocumentsScreen: React.FC<DocumentsScreenProps> = () => {
         </View>
       </ScrollView>
 
-      {/* Hamburger Menu Overlay */}
-      <HamburgerMenu 
-        isVisible={isMenuVisible} 
-        onClose={() => setIsMenuVisible(false)} 
-      />
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNavigation}>
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/HomeScreen')}
+        >
+          <MaterialIcons name="home" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Inicio</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/TripsScreen')}
+        >
+          <MaterialIcons name="directions-car" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Rutas</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/EarningsScreen')}
+        >
+          <MaterialIcons name="local-taxi" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Unidad</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/DocumentsScreen')}
+        >
+          <MaterialIcons name="description" size={24} color="#20c997" />
+          <Text style={[styles.navText, { color: "#20c997" }]}>Docs</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/ProfileScreen')}
+        >
+          <MaterialIcons name="person" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Perfil</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Floating Action Button for Incidents */}
+      <TouchableOpacity 
+        style={styles.floatingButton}
+        onPress={() => router.push('/Incidents/IncidentsScreen')}
+      >
+        <MaterialIcons name="warning" size={28} color="white" />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -390,6 +423,42 @@ const styles = StyleSheet.create({
     fontSize: typography.sizes.sm,
     color: 'white',
     fontWeight: typography.weights.medium,
+  },
+  // Bottom Navigation Styles
+  bottomNavigation: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    paddingVertical: 8,
+    paddingBottom: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+    elevation: 8,
+  },
+  navItem: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 4,
+  },
+  navText: {
+    fontSize: 12,
+    marginTop: 2,
+    fontWeight: '500',
+  },
+  floatingButton: {
+    position: 'absolute',
+    bottom: 90,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#FF4444',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
 });
 

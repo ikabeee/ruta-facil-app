@@ -1,22 +1,18 @@
 import { MaterialIcons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { colors, spacing, typography } from '../Styles/theme';
-import HamburgerMenu from './HamburgerMenu';
 
 const TripsScreen: React.FC = () => {
-  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
-  
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
-  };
+  const [isButtonPressed, setIsButtonPressed] = React.useState(false);
 
   const filters = ['Todos (12)', 'Hoy (3)', 'Esta semana (8)', 'Este mes (12)'];
   
@@ -57,33 +53,33 @@ const TripsScreen: React.FC = () => {
     <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={toggleMenu}>
-          <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
+        <View style={styles.logoContainer}>
+          <MaterialIcons name="route" size={20} color="white" />
+          <Text style={styles.logoTitle}>Ruta Fácil</Text>
+        </View>
         <Text style={styles.title}>Mis Rutas</Text>
-        <TouchableOpacity>
-          <MaterialIcons name="search" size={24} color={colors.textSecondary} />
+        <TouchableOpacity style={{ padding: spacing.sm }}>
+          <MaterialIcons name="search" size={24} color="white" />
         </TouchableOpacity>
       </View>
 
-      {/* Filters */}
-      <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        style={styles.filtersContainer}
-        contentContainerStyle={styles.filtersContent}
-      >
-        {filters.map((filter, index) => (
-          <TouchableOpacity 
-            key={index} 
-            style={[styles.filterButton, index === 0 && styles.activeFilter]}
-          >
-            <Text style={[styles.filterText, index === 0 && styles.activeFilterText]}>
-              {filter}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      {/* Botón Empezar Ruta */}
+      <View style={styles.buttonContainer}>
+        <Text style={styles.buttonTitle}>Comenzar Ruta</Text>
+        <TouchableOpacity 
+          style={[
+            styles.startRouteButton, 
+            isButtonPressed && styles.startRouteButtonPressed
+          ]} 
+          activeOpacity={0.8}
+          onPressIn={() => setIsButtonPressed(true)}
+          onPressOut={() => setIsButtonPressed(false)}
+        >
+          <Text style={styles.routeAssignedText}>Ruta Asignada:</Text>
+          <Text style={styles.routeDetailsText}>Centro → Aeropuerto</Text>
+          <MaterialIcons name="navigation" size={28} color="white" style={styles.buttonIcon} />
+        </TouchableOpacity>
+      </View>
 
       {/* Trips List */}
       <ScrollView style={styles.tripsList}>
@@ -121,11 +117,56 @@ const TripsScreen: React.FC = () => {
         ))}
       </ScrollView>
 
-      {/* Hamburger Menu Overlay */}
-      <HamburgerMenu 
-        isVisible={isMenuVisible} 
-        onClose={() => setIsMenuVisible(false)} 
-      />
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNavigation}>
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/HomeScreen')}
+        >
+          <MaterialIcons name="home" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Inicio</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/TripsScreen')}
+        >
+          <MaterialIcons name="directions-car" size={24} color="#20c997" />
+          <Text style={[styles.navText, { color: "#20c997" }]}>Rutas</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/EarningsScreen')}
+        >
+          <MaterialIcons name="local-taxi" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Unidad</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/DocumentsScreen')}
+        >
+          <MaterialIcons name="description" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Docs</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navItem}
+          onPress={() => router.replace('/Drivers/ProfileScreen')}
+        >
+          <MaterialIcons name="person" size={24} color="#666" />
+          <Text style={[styles.navText, { color: "#666" }]}>Perfil</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Floating Action Button for Incidents */}
+      <TouchableOpacity 
+        style={styles.floatingButton}
+        onPress={() => router.push('/Incidents/IncidentsScreen')}
+      >
+        <MaterialIcons name="warning" size={28} color="white" />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -136,42 +177,96 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   header: {
+    backgroundColor: '#20c997',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: spacing.lg,
-    backgroundColor: colors.surface,
-    elevation: 2,
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logoTitle: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 8,
   },
   title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  buttonContainer: {
+    paddingVertical: spacing.lg,
+    paddingHorizontal: spacing.lg,
+    alignItems: 'center',
+  },
+  buttonTitle: {
     fontSize: typography.sizes.xl,
     fontWeight: typography.weights.bold,
     color: colors.textPrimary,
+    marginBottom: spacing.md,
+    textAlign: 'center',
   },
-  filtersContainer: {
-    backgroundColor: colors.surface,
-  },
-  filtersContent: {
+  centerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
   },
-  filterButton: {
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: 20,
-    backgroundColor: colors.background,
-    marginRight: spacing.sm,
+  startRouteButton: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    backgroundColor: '#FF4444',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 16, // Sombra más fuerte en Android
+    shadowColor: '#FF4444',
+    shadowOffset: {
+      width: 0,
+      height: 8, // Sombra más grande
+    },
+    shadowOpacity: 0.5, // Más opacidad
+    shadowRadius: 16, // Radio más grande
+    paddingHorizontal: spacing.sm,
   },
-  activeFilter: {
-    backgroundColor: colors.primary,
+  startRouteButtonPressed: {
+    elevation: 24, // Sombra aún más prominente cuando se presiona
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.7, // Más opacidad
+    shadowRadius: 20, // Radio más grande
+    transform: [{ scale: 0.98 }], // Ligeramente más pequeño cuando se presiona
   },
-  filterText: {
-    fontSize: typography.sizes.sm,
-    color: colors.textSecondary,
-  },
-  activeFilterText: {
-    color: 'white',
+  routeAssignedText: {
+    fontSize: typography.sizes.xs,
     fontWeight: typography.weights.medium,
+    color: 'rgba(255, 255, 255, 0.8)',
+    textAlign: 'center',
+    marginBottom: spacing.xs,
+  },
+  routeDetailsText: {
+    fontSize: typography.sizes.sm,
+    fontWeight: typography.weights.bold,
+    color: 'white',
+    textAlign: 'center',
+    marginBottom: spacing.xs,
+  },
+  startRouteText: {
+    fontSize: typography.sizes.md,
+    fontWeight: typography.weights.bold,
+    color: 'white',
+    marginBottom: spacing.xs,
+    textAlign: 'center',
+  },
+  buttonIcon: {
+    marginTop: spacing.xs,
   },
   tripsList: {
     flex: 1,
@@ -241,6 +336,42 @@ const styles = StyleSheet.create({
     fontSize: typography.sizes.sm,
     color: colors.textSecondary,
     marginLeft: spacing.xs,
+  },
+  // Bottom Navigation Styles
+  bottomNavigation: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    paddingVertical: 8,
+    paddingBottom: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+    elevation: 8,
+  },
+  navItem: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 4,
+  },
+  navText: {
+    fontSize: 12,
+    marginTop: 2,
+    fontWeight: '500',
+  },
+  floatingButton: {
+    position: 'absolute',
+    bottom: 90,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#FF4444',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
 });
 

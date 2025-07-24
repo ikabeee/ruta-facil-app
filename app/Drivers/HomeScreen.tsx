@@ -1,130 +1,198 @@
 import { MaterialIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import React from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { colors, spacing, typography } from '../Styles/theme';
-import HamburgerMenu from './HamburgerMenu';
 
 interface HomeScreenProps {
   // No navigation props needed for expo-router
 };
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
-  const [isMenuVisible, setIsMenuVisible] = React.useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
-  };
+  // Asegurar que la pantalla se recarga correctamente
+  useFocusEffect(
+    React.useCallback(() => {
+      // Aquí puedes agregar lógica para refrescar datos cuando la pantalla gane foco
+      return () => {
+        // Cleanup si es necesario
+      };
+    }, [])
+  );
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header with Menu Button */}
-      <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.menuButton}
-          onPress={toggleMenu}
-        >
-          <MaterialIcons name="menu" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
-        
-        <View style={styles.headerCenter}>
-          <Text style={styles.greeting}>¡Hola!</Text>
-          <Text style={styles.driverName}>Carlos Mendoza</Text>
+      {/* Header Verde Compacto */}
+      <View style={styles.headerCompact}>
+        <View style={styles.logoContainer}>
+          <MaterialIcons name="route" size={20} color="white" />
+          <Text style={styles.logoTitle}>Ruta Fácil</Text>
         </View>
-        
-        <TouchableOpacity style={styles.statusButton}>
-          <MaterialIcons name="radio-button-unchecked" size={20} color="white" />
-          <Text style={styles.statusText}>Desconectado</Text>
-        </TouchableOpacity>
+        <Text style={styles.locationText}>Huauchinango, Puebla</Text>
+        <View style={styles.menuButton} />
+      </View>
+
+      {/* Ubicación Actual Card */}
+      <View style={styles.locationCard}>
+        <View style={styles.locationHeader}>
+          <MaterialIcons name="my-location" size={18} color="white" />
+          <Text style={styles.locationLabel}>Tu ubicación actual</Text>
+        </View>
+        <Text style={styles.locationTitle}>Centro</Text>
+        <Text style={styles.locationSubtitle}>Huauchinango, Puebla</Text>
       </View>
 
       <ScrollView style={styles.content}>
-        {/* Stats Cards */}
-        <View style={styles.statsRow}>
+        {/* Estadísticas del Conductor */}
+        <View style={styles.statsContainer}>
           <View style={styles.statCard}>
-            <View style={[styles.statIcon, { backgroundColor: colors.success }]}>
-              <MaterialIcons name="attach-money" size={24} color="white" />
+            <View style={styles.statIconContainer}>
+              <MaterialIcons name="attach-money" size={24} color="#20c997" />
             </View>
-            <Text style={styles.statTitle}>Ganancias Hoy</Text>
+            <Text style={styles.statLabel}>Ganancias Hoy</Text>
             <Text style={styles.statValue}>$125.50</Text>
           </View>
           
           <View style={styles.statCard}>
-            <View style={[styles.statIcon, { backgroundColor: colors.primary }]}>
-              <MaterialIcons name="directions-car" size={24} color="white" />
+            <View style={styles.statIconContainer}>
+              <MaterialIcons name="directions-bus" size={24} color="#20c997" />
             </View>
-            <Text style={styles.statTitle}>Rutas Hoy</Text>
+            <Text style={styles.statLabel}>Rutas Hoy</Text>
             <Text style={styles.statValue}>8</Text>
           </View>
         </View>
 
-        <View style={styles.statsRow}>
+        <View style={styles.statsContainer}>
           <View style={styles.statCard}>
-            <View style={[styles.statIcon, { backgroundColor: colors.warning }]}>
-              <MaterialIcons name="star" size={24} color="white" />
+            <View style={styles.statIconContainer}>
+              <MaterialIcons name="star" size={24} color="#FFD700" />
             </View>
-            <Text style={styles.statTitle}>Calificación</Text>
+            <Text style={styles.statLabel}>Calificación</Text>
             <Text style={styles.statValue}>4.8</Text>
           </View>
           
           <View style={styles.statCard}>
-            <View style={[styles.statIcon, { backgroundColor: colors.info }]}>
-              <MaterialIcons name="timeline" size={24} color="white" />
+            <View style={styles.statIconContainer}>
+              <MaterialIcons name="trending-up" size={24} color="#20c997" />
             </View>
-            <Text style={styles.statTitle}>Total Viajes</Text>
+            <Text style={styles.statLabel}>Total Viajes</Text>
             <Text style={styles.statValue}>1,247</Text>
           </View>
         </View>
 
-        {/* Recent Routes */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Rutas Recientes</Text>
-            <TouchableOpacity onPress={() => router.push('/Drivers/TripsScreen')}>
-              <Text style={styles.seeAllText}>Ver todos</Text>
+        {/* Rutas Recientes */}
+        <View style={styles.routesSection}>
+          <View style={styles.routesSectionHeader}>
+            <Text style={styles.routesSectionTitle}>Rutas Recientes</Text>
+            <TouchableOpacity>
+              <Text style={styles.viewAllText}>Ver todos</Text>
             </TouchableOpacity>
           </View>
           
-          {[
-            { from: 'Centro Comercial', to: 'Zona Rosa', earnings: 15.50, time: '14:30', rating: 5 },
-            { from: 'Aeropuerto', to: 'Hotel Plaza', earnings: 28.75, time: '12:15', rating: 4 },
-            { from: 'Universidad', to: 'Residencial Norte', earnings: 12.25, time: '10:45', rating: 5 },
-          ].map((trip, index) => (
-            <View key={index} style={styles.tripCard}>
-              <View style={styles.tripInfo}>
-                <View style={styles.routePoint}>
-                  <MaterialIcons name="my-location" size={16} color={colors.success} />
-                  <Text style={styles.locationText}>{trip.from}</Text>
-                </View>
-                <View style={styles.routePoint}>
-                  <MaterialIcons name="location-on" size={16} color={colors.error} />
-                  <Text style={styles.locationText}>{trip.to}</Text>
-                </View>
+          {/* Ruta Centro Comercial */}
+          <View style={styles.routeCard}>
+            <View style={styles.routeHeader}>
+              <View style={styles.routeDestination}>
+                <MaterialIcons name="my-location" size={16} color="#20c997" />
+                <Text style={styles.routeFrom}>Centro Comercial</Text>
               </View>
-              <View style={styles.tripDetails}>
-                <Text style={styles.tripTime}>{trip.time}</Text>
-                <Text style={styles.tripEarnings}>${trip.earnings}</Text>
-                <View style={styles.ratingContainer}>
-                  <MaterialIcons name="star" size={16} color={colors.warning} />
-                  <Text style={styles.ratingText}>{trip.rating}</Text>
-                </View>
+              <Text style={styles.routeTime}>14:30</Text>
+            </View>
+            <View style={styles.routeDestination}>
+              <MaterialIcons name="location-on" size={16} color="#FF5722" />
+              <Text style={styles.routeTo}>Zona Rosa</Text>
+            </View>
+            <View style={styles.routeDetailsRow}>
+              <Text style={styles.routeEarnings}>$15.50</Text>
+              <View style={styles.routeRating}>
+                <MaterialIcons name="star" size={16} color="#FFD700" />
+                <Text style={styles.ratingText}>5</Text>
               </View>
             </View>
-          ))}
+          </View>
+
+          {/* Ruta Aeropuerto */}
+          <View style={styles.routeCard}>
+            <View style={styles.routeHeader}>
+              <View style={styles.routeDestination}>
+                <MaterialIcons name="my-location" size={16} color="#20c997" />
+                <Text style={styles.routeFrom}>Aeropuerto</Text>
+              </View>
+              <Text style={styles.routeTime}>12:15</Text>
+            </View>
+            <View style={styles.routeDestination}>
+              <MaterialIcons name="location-on" size={16} color="#FF5722" />
+              <Text style={styles.routeTo}>Hotel Plaza</Text>
+            </View>
+            <View style={styles.routeDetailsRow}>
+              <Text style={styles.routeEarnings}>$28.75</Text>
+              <View style={styles.routeRating}>
+                <MaterialIcons name="star" size={16} color="#FFD700" />
+                <Text style={styles.ratingText}>4</Text>
+              </View>
+            </View>
+          </View>
+
+          {/* Ruta Universidad */}
+          <View style={styles.routeCard}>
+            <View style={styles.routeHeader}>
+              <View style={styles.routeDestination}>
+                <MaterialIcons name="my-location" size={16} color="#20c997" />
+                <Text style={styles.routeFrom}>Universidad</Text>
+              </View>
+              <Text style={styles.routeTime}>10:45</Text>
+            </View>
+            <View style={styles.routeDestination}>
+              <MaterialIcons name="location-on" size={16} color="#FF5722" />
+              <Text style={styles.routeTo}>Residencial Norte</Text>
+            </View>
+            <View style={styles.routeDetailsRow}>
+              <Text style={styles.routeEarnings}>$12.25</Text>
+              <View style={styles.routeRating}>
+                <MaterialIcons name="star" size={16} color="#FFD700" />
+                <Text style={styles.ratingText}>5</Text>
+              </View>
+            </View>
+          </View>
         </View>
       </ScrollView>
 
-      {/* Hamburger Menu Overlay */}
-      <HamburgerMenu 
-        isVisible={isMenuVisible} 
-        onClose={() => setIsMenuVisible(false)} 
-      />
+      {/* Floating Action Button for Incidents */}
+      <TouchableOpacity 
+        style={styles.floatingButton} 
+        onPress={() => router.push('/Incidents/IncidentsScreen')}
+      >
+        <MaterialIcons name="warning" size={28} color="white" />
+      </TouchableOpacity>
+
+      {/* Bottom Navigation */}
+      <View style={styles.bottomNavigation}>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/HomeScreen')}>
+          <MaterialIcons name="home" size={24} color="#20c997" />
+          <Text style={[styles.navText, { color: '#20c997' }]}>Inicio</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/TripsScreen')}>
+          <MaterialIcons name="directions-car" size={24} color="#666" />
+          <Text style={styles.navText}>Rutas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/EarningsScreen')}>
+          <MaterialIcons name="local-taxi" size={24} color="#666" />
+          <Text style={styles.navText}>Unidad</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/DocumentsScreen')}>
+          <MaterialIcons name="description" size={24} color="#666" />
+          <Text style={styles.navText}>Docs</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.navItem} onPress={() => router.replace('/Drivers/ProfileScreen')}>
+          <MaterialIcons name="person" size={24} color="#666" />
+          <Text style={styles.navText}>Perfil</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -132,148 +200,290 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: '#F5F5F5',
   },
-  header: {
+  // Header compacto como en la imagen
+  headerCompact: {
+    backgroundColor: '#20c997',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: spacing.lg,
-    backgroundColor: colors.surface,
-    elevation: 2,
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logoTitle: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 8,
+  },
+  locationText: {
+    color: 'white',
+    fontSize: 12,
+    opacity: 0.9,
   },
   menuButton: {
-    padding: spacing.sm,
+    padding: 4,
   },
-  headerCenter: {
-    flex: 1,
-    alignItems: 'center',
+  // Card de ubicación actual
+  locationCard: {
+    backgroundColor: '#20c997',
+    marginHorizontal: 16,
+    marginTop: 16,
+    marginBottom: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    borderRadius: 12,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
-  greeting: {
-    fontSize: typography.sizes.sm,
-    color: colors.textSecondary,
-  },
-  driverName: {
-    fontSize: typography.sizes.lg,
-    fontWeight: typography.weights.bold,
-    color: colors.textPrimary,
-  },
-  statusButton: {
+  locationHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.error,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: 20,
+    marginBottom: 8,
   },
-  statusText: {
+  locationLabel: {
     color: 'white',
-    fontWeight: typography.weights.medium,
-    marginLeft: spacing.xs,
+    fontSize: 12,
+    marginLeft: 6,
+    opacity: 0.9,
   },
+  locationTitle: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 2,
+  },
+  locationSubtitle: {
+    color: 'white',
+    fontSize: 14,
+    opacity: 0.9,
+  },
+  // Content
   content: {
     flex: 1,
-    padding: spacing.md,
+    paddingHorizontal: 16,
+    paddingTop: 0,
   },
-  statsRow: {
+  // Estadísticas del conductor
+  statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: spacing.md,
+    marginBottom: 16,
   },
   statCard: {
-    flex: 1,
-    backgroundColor: colors.surface,
-    padding: spacing.md,
+    backgroundColor: 'white',
     borderRadius: 12,
+    padding: 16,
+    flex: 1,
+    marginHorizontal: 8,
     alignItems: 'center',
-    marginHorizontal: spacing.xs,
     elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
-  statIcon: {
+  statIconContainer: {
     width: 48,
     height: 48,
     borderRadius: 24,
+    backgroundColor: '#F5F5F5',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: spacing.sm,
+    marginBottom: 8,
   },
-  statTitle: {
-    fontSize: typography.sizes.xs,
-    color: colors.textSecondary,
+  statLabel: {
+    fontSize: 12,
+    color: '#666',
     textAlign: 'center',
-    marginBottom: spacing.xs,
+    marginBottom: 4,
   },
   statValue: {
-    fontSize: typography.sizes.xl,
-    fontWeight: typography.weights.bold,
-    color: colors.textPrimary,
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+    textAlign: 'center',
   },
-  section: {
-    marginVertical: spacing.lg,
-  },
-  sectionHeader: {
+  // Barra de búsqueda
+  searchContainer: {
+    backgroundColor: 'white',
+    borderRadius: 25,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: spacing.md,
-  },
-  sectionTitle: {
-    fontSize: typography.sizes.lg,
-    fontWeight: typography.weights.bold,
-    color: colors.textPrimary,
-  },
-  seeAllText: {
-    fontSize: typography.sizes.sm,
-    color: colors.primary,
-    fontWeight: typography.weights.medium,
-  },
-  tripCard: {
-    backgroundColor: colors.surface,
-    padding: spacing.md,
-    borderRadius: 12,
-    marginBottom: spacing.sm,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    marginBottom: 20,
     elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
-  tripInfo: {
+  searchText: {
+    marginLeft: 12,
+    fontSize: 16,
+    color: '#666',
     flex: 1,
   },
-  routePoint: {
+  // Botones de acción
+  actionButtonsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 24,
+  },
+  actionButton: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 16,
+    alignItems: 'center',
+    flex: 1,
+    marginHorizontal: 8,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  actionButtonText: {
+    marginTop: 8,
+    fontSize: 14,
+    color: '#333',
+    fontWeight: '500',
+  },
+  // Sección de rutas
+  routesSection: {
+    marginBottom: 80,
+  },
+  routesSectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  routesSectionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+  },
+  viewAllText: {
+    fontSize: 14,
+    color: '#20c997',
+    fontWeight: '500',
+  },
+  // Cards de rutas
+  routeCard: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  routeHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  routeDestination: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: spacing.xs,
+    marginBottom: 4,
   },
-  locationText: {
-    fontSize: typography.sizes.sm,
-    color: colors.textPrimary,
-    marginLeft: spacing.xs,
+  routeFrom: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+    marginLeft: 8,
   },
-  tripDetails: {
-    alignItems: 'flex-end',
+  routeTo: {
+    fontSize: 14,
+    color: '#666',
+    marginLeft: 8,
   },
-  tripTime: {
-    fontSize: typography.sizes.xs,
-    color: colors.textSecondary,
-    marginBottom: spacing.xs,
+  routeTime: {
+    fontSize: 12,
+    color: '#666',
+    fontWeight: '500',
   },
-  tripEarnings: {
-    fontSize: typography.sizes.md,
-    fontWeight: typography.weights.bold,
-    color: colors.success,
-    marginBottom: spacing.xs,
+  routeDetailsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 8,
   },
-  ratingContainer: {
+  routeEarnings: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#20c997',
+  },
+  routeRating: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#F5F5F5',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
   },
   ratingText: {
-    fontSize: typography.sizes.xs,
-    color: colors.textSecondary,
-    marginLeft: spacing.xs,
+    fontSize: 12,
+    color: '#333',
+    marginLeft: 4,
+    fontWeight: '500',
+  },
+  // Floating Action Button for Incidents
+  floatingButton: {
+    position: 'absolute',
+    bottom: 90,
+    right: 20,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#FF4444',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+  },
+  // Bottom Navigation
+  bottomNavigation: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+  },
+  navItem: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  navText: {
+    fontSize: 12,
+    color: '#666',
+    marginTop: 4,
   },
   
-  // Menu Hamburger Styles
+  // Estilos del Menu Hamburger (mantener los existentes)
   menuOverlay: {
     position: 'absolute',
     top: 0,

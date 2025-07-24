@@ -1,6 +1,6 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface ReportIncidentSectionProps {
   onCategoryPress?: (category: string) => void;
@@ -10,10 +10,10 @@ const ReportIncidentSection: React.FC<ReportIncidentSectionProps> = ({
   onCategoryPress 
 }) => {
   const categories = [
-    { id: 'traffic', title: 'Tráfico', icon: 'warning-outline' },
-    { id: 'accident', title: 'Accidente', icon: 'medical-outline' },
-    { id: 'construction', title: 'Obra', icon: 'construct-outline' },
-    { id: 'other', title: 'Otro', icon: 'chatbubble-outline' },
+    { id: 'traffic', title: 'Tráfico', icon: 'warning' },
+    { id: 'accident', title: 'Accidente', icon: 'local-hospital' },
+    { id: 'construction', title: 'Obra', icon: 'construction' },
+    { id: 'other', title: 'Otro', icon: 'chat' },
   ];
 
   return (
@@ -27,10 +27,10 @@ const ReportIncidentSection: React.FC<ReportIncidentSectionProps> = ({
             style={styles.categoryButton}
             onPress={() => onCategoryPress?.(category.id)}
           >
-            <Ionicons 
+            <MaterialIcons 
               name={category.icon as any} 
               size={24} 
-              color="#666" 
+              color="#20c997" 
             />
             <Text style={styles.categoryText}>{category.title}</Text>
           </TouchableOpacity>
