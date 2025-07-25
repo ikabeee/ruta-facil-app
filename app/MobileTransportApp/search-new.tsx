@@ -11,7 +11,7 @@ import {
   Search,
   Send,
 } from 'lucide-react-native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -31,7 +31,25 @@ export default function SearchScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
 
-  const loadAllRoutes = useCallback(async () => {
+  // Cargar todas las rutas al inicio
+  useEffect(() => {
+    loadAllRoutes();
+  }, []);
+
+  // Buscar rutas en tiempo real cuando cambia la búsqueda
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (searchQuery.trim() === '') {
+        loadAllRoutes();
+      } else {
+        searchRoutes();
+      }
+    }, 300); // Debounce de 300ms
+
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery]);
+
+  const loadAllRoutes = async () => {
     try {
       setIsInitialLoading(true);
       console.log('🔍 [SEARCH] Cargando todas las rutas...');
@@ -44,9 +62,9 @@ export default function SearchScreen() {
     } finally {
       setIsInitialLoading(false);
     }
-  }, []);
+  };
 
-  const searchRoutes = useCallback(async () => {
+  const searchRoutes = async () => {
     if (!searchQuery.trim()) return;
     
     try {
@@ -61,25 +79,7 @@ export default function SearchScreen() {
     } finally {
       setIsLoading(false);
     }
-  }, [searchQuery]);
-
-  // Cargar todas las rutas al inicio
-  useEffect(() => {
-    loadAllRoutes();
-  }, [loadAllRoutes]);
-
-  // Buscar rutas en tiempo real cuando cambia la búsqueda
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (searchQuery.trim() === '') {
-        loadAllRoutes();
-      } else {
-        searchRoutes();
-      }
-    }, 300); // Debounce de 300ms
-
-    return () => clearTimeout(timeoutId);
-  }, [searchQuery, loadAllRoutes, searchRoutes]);
+  };
 
   // Función helper para obtener el color del estado
   const getStatusColor = (status: string) => {
