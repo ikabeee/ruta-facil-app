@@ -1,25 +1,26 @@
-import React from "react"
-import { useRouter } from "expo-router"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useRouter } from "expo-router"
 import {
-  View,
-  Text,
-  ScrollView,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native"
-import {
+  AlertTriangle,
   Building,
-  MapPin,
-  Search,
-  Heart,
   Bus,
   Clock,
-  Send,
+  Heart,
   Home,
-  AlertTriangle,
+  MapPin,
+  Search,
+  Send,
+  User,
 } from "lucide-react-native"
+import React from "react"
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native"
 
 export default function MobileTransportApp() {
   const router = useRouter()
@@ -64,7 +65,7 @@ export default function MobileTransportApp() {
 
   return (
     <View style={styles.container}>
-      {/* Header sin icono de menú */}
+      {/* Header con botón de perfil */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Building size={24} color="white" />
@@ -73,6 +74,12 @@ export default function MobileTransportApp() {
             <Text style={styles.headerSubtitle}>Huauchinango, Puebla</Text>
           </View>
         </View>
+        <TouchableOpacity
+          style={styles.profileButton}
+          onPress={() => router.push('/MobileTransportApp/profile')}
+        >
+          <User size={24} color="white" />
+        </TouchableOpacity>
       </View>
 
       {/* Main Scrollable Content */}
@@ -163,8 +170,8 @@ export default function MobileTransportApp() {
                         favoritos.push(route)
                         await AsyncStorage.setItem("favoritos", JSON.stringify(favoritos))
                       }
-                    } catch (e) {
-                      // Manejo de error
+                    } catch {
+                      // Manejo de error silencioso
                     }
                     router.push("/MobileTransportApp/favoritos")
                   }}
@@ -181,7 +188,7 @@ export default function MobileTransportApp() {
       <View style={styles.navbar}>
   <TouchableOpacity
     style={styles.navItem}
-    onPress={() => router.push("/MobileTransportApp/favoritos")}
+    onPress={() => router.push("/MobileTransportApp/user")}
   >
     <Home size={24} color="#20c997" />
     <Text style={styles.navText}>Inicio</Text>
@@ -225,11 +232,16 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: "#20c997",
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignItems: "center",
     padding: 16,
   },
   headerLeft: { flexDirection: "row", alignItems: "center", gap: 8 },
+  profileButton: {
+    padding: 8,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+  },
   headerTitle: { color: "white", fontSize: 16, fontWeight: "bold" },
   headerSubtitle: { color: "white", fontSize: 12, opacity: 0.9 },
   content: { flex: 1 },

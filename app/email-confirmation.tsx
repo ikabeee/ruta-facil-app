@@ -19,7 +19,7 @@ export default function EmailConfirmationScreen({ email }: EmailConfirmationProp
 
       await new Promise((resolve) => setTimeout(resolve, 2000))
       Alert.alert("Correo reenviado", "Hemos enviado un nuevo correo de confirmación")
-    } catch (error) {
+    } catch {
       Alert.alert("Error", "No se pudo reenviar el correo")
     } finally {
       setIsResending(false)
@@ -27,7 +27,7 @@ export default function EmailConfirmationScreen({ email }: EmailConfirmationProp
   }
 
   const handleBackToLogin = () => {
-    router.push("/auth/login")
+    router.push("/login")
   }
   return (
     <SafeAreaView style={{ flex: 1 }}>
