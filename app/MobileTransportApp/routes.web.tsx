@@ -136,7 +136,7 @@ export default function SeguirRutaScreen() {
       <View style={styles.navbar}>
         <TouchableOpacity
           style={styles.navButton}
-          onPress={() => router.push("/MobileTransportApp/search")}
+          onPress={() => router.push("/MobileTransportApp/user")}
         >
           <Home size={24} color="#666" />
           <Text style={styles.navLabel}>Inicio</Text>
@@ -144,10 +144,10 @@ export default function SeguirRutaScreen() {
 
         <TouchableOpacity
           style={styles.navButton}
-          onPress={() => router.push("/MobileTransportApp/search")}
+          onPress={() => router.push("/MobileTransportApp/routes")}
         >
           <Search size={24} color="#666" />
-          <Text style={styles.navLabel}>Buscar</Text>
+          <Text style={styles.navLabel}>Rutas</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

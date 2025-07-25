@@ -269,10 +269,10 @@ export default function FavoritosScreen() {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}
-          onPress={() => router.push("/MobileTransportApp/search")}
+          onPress={() => router.push("/MobileTransportApp/routes")}
         >
           <Search size={24} color="#000000ff" />
-          <Text style={styles.navText}>Buscar</Text>
+          <Text style={styles.navText}>Rutas</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.navItem}

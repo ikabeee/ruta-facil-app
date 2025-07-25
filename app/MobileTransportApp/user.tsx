@@ -278,13 +278,6 @@ export default function MobileTransportApp() {
             <Search size={24} color="#20c997" />
             <Text style={styles.quickActionText}>Buscar</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
-            style={[styles.quickActionBtn, styles.trackRouteBtn]}
-            onPress={() => router.push('/tracking/route-selector')}
-          >
-            <Bus size={24} color="white" />
-            <Text style={[styles.quickActionText, { color: 'white', fontWeight: '600' }]}>Seguir Ruta</Text>
-          </TouchableOpacity>
         </View>
 
         {/* Nearby Routes */}
@@ -411,7 +404,7 @@ export default function MobileTransportApp() {
     onPress={() => router.push("/MobileTransportApp/routes")}
   >
     <Send size={24} color="#000000ff" />
-    <Text style={styles.navText}>Seguir</Text>
+    <Text style={styles.navText}>Rutas</Text>
   </TouchableOpacity>
   <TouchableOpacity
     style={styles.navItem}
@@ -486,10 +479,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   quickActionText: { color: "#000000ff", fontSize: 14, marginTop: 4 },
-  trackRouteBtn: {
-    backgroundColor: "#3b82f6",
-    borderColor: "#3b82f6",
-  },
   section: { marginBottom: 32 },
   sectionHeader: { flexDirection: "row", alignItems: "center", gap: 8, marginBottom: 12 },
   sectionTitle: { fontSize: 16, fontWeight: "bold", color: "#111827" },
