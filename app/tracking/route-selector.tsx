@@ -2,24 +2,24 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Location from 'expo-location';
 import { useRouter } from "expo-router";
 import {
-  ChevronLeft,
-  Clock,
-  Heart,
-  MapPin,
-  Navigation,
-  Route,
-  Users
+    ChevronLeft,
+    Clock,
+    Heart,
+    MapPin,
+    Navigation,
+    Route,
+    Users
 } from "lucide-react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  ActivityIndicator,
-  Alert,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
+    ActivityIndicator,
+    Alert,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
 } from "react-native";
 import { apiService, Route as RouteType } from "../../utils/api.service";
 
