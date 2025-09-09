@@ -85,9 +85,9 @@ const TripCompletedScreen = () => {
           <Home size={24} color="#000" />
           <Text style={styles.navText}>Inicio</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/routes")}> 
+        <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/search")}> 
           <Search size={24} color="#000" />
-          <Text style={styles.navText}>Rutas</Text>
+          <Text style={styles.navText}>Buscar</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navItem} onPress={() => router.push("/MobileTransportApp/favoritos")}> 
           <Heart size={24} color="#000" />

@@ -35,14 +35,7 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-web-browser",
-      [
-        "expo-location",
-        {
-          "locationAlwaysAndWhenInUsePermission": "Esta app necesita acceso a tu ubicación para mostrarte rutas cercanas y servicios de transporte en tu área.",
-          "isIosBackgroundLocationEnabled": false
-        }
-      ]
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true

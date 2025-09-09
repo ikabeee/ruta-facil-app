@@ -13,7 +13,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useAuth } from "../utils/auth.context"
 import { AuthService } from "../utils/auth.service"
-import { redirectToRoleBasedHome } from "../utils/navigation.helper"
+import { getWelcomeMessage, redirectToRoleBasedHome } from "../utils/navigation.helper"
 
 export default function OtpVerificationScreen() {
   const { email } = useLocalSearchParams<{ email: string }>()
@@ -58,45 +58,33 @@ export default function OtpVerificationScreen() {
         email: email || undefined
       });
 
-      console.log('=== OTP VERIFICATION RESULT ===');
-      console.log('Success:', result.success);
-      console.log('Data:', JSON.stringify(result.data, null, 2));
-
       if (result.success && result.data) {
-        // Check if we have user data
-        if (!result.data.user) {
-          console.error('❌ No user data received');
-          Alert.alert("Error", "No se recibieron datos del usuario. Intenta nuevamente.");
+        // Validate that we have both user and token before proceeding
+        if (!result.data.user || !result.data.token) {
+          console.error('Invalid auth data received:', result.data);
+          Alert.alert("Error", "Datos de autenticación incompletos. Intenta nuevamente.");
           return;
         }
 
-        // TEMPORARY FIX: If backend doesn't return token, generate a placeholder
-        let token = result.data.token;
-        if (!token) {
-          console.warn('⚠️  Backend did not return token, using temporary solution');
-          // Use a temporary token format that includes user info
-          token = `temp_token_${result.data.user.id}_${Date.now()}`;
-          console.log('🔧 Generated temporary token:', token);
-          
-          Alert.alert(
-            "Advertencia", 
-            "El servidor no devolvió un token de autenticación válido. Se usará una sesión temporal.",
-            [{ text: "Continuar", style: "default" }]
-          );
-        }
-
         // Usar el contexto de autenticación para guardar la sesión
-        await contextLogin(result.data.user, token);
+        await contextLogin(result.data.user, result.data.token);
         
         console.log("Usuario autenticado:", result.data);
         
-        // Obtener el rol del usuario
-        const userRole = result.data.user.role;
-        console.log("Rol del usuario:", userRole);
+        // Mensaje de bienvenida personalizado según el rol
+        const welcomeMsg = getWelcomeMessage(result.data.user.role, result.data.user.name);
+        const userRole = result.data.user.role; // Guardar para usar en el callback
         
-        // Redirigir inmediatamente sin Alert
-        console.log("Iniciando redirección...");
-        redirectToRoleBasedHome(userRole);
+        Alert.alert(
+          "¡Verificación exitosa!",
+          welcomeMsg,
+          [
+            {
+              text: "Continuar",
+              onPress: () => redirectToRoleBasedHome(userRole)
+            }
+          ]
+        );
       } else {
         Alert.alert("Error", result.error || "Código incorrecto. Intenta nuevamente");
         // Limpiar el OTP en caso de error

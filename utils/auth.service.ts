@@ -98,18 +98,9 @@ export class AuthService {
 
       const responseData = await response.json();
 
-      console.log('=== BACKEND RESPONSE ===');
-      console.log('Status:', response.status);
-      console.log('Response Data:', JSON.stringify(responseData, null, 2));
-
       if (response.ok) {
         // Check if this is a login completion (has user and token) or just email verification
         if (responseData.data && responseData.data.user) {
-          console.log('✅ Response has user data');
-          console.log('🔍 Checking for token field...');
-          console.log('Has token:', !!responseData.data.token);
-          console.log('Available data fields:', Object.keys(responseData.data));
-          
           // This is a successful OTP login completion
           return { 
             success: true, 

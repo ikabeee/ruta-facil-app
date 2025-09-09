@@ -25,11 +25,7 @@ export const API_ENDPOINTS = {
     LOGOUT: `${API_BASE_URL}/auth/logout`,
     CURRENT_USER: `${API_BASE_URL}/auth/me`,
   },
-  PUBLIC: {
-    ROUTES: `${API_BASE_URL}/public/routes`,
-    SEARCH_ROUTES: `${API_BASE_URL}/public/routes/search`,
-    CURRENT_LOCATION: `${API_BASE_URL}/public/location/current`,
-  },
+  // Otros endpoints pueden ir aquí
 };
 
 export default API_ENDPOINTS;

@@ -1,4 +1,3 @@
-
 export const colors = {
   primary: '#20c997',
   secondary: '#FF9800',
@@ -47,8 +46,3 @@ export const borderRadius = {
   lg: 12,
   xl: 16,
 } as const;
-
-// Exportación por defecto requerida por Expo Router
-export default function ThemeConfig() {
-  return null;
-}

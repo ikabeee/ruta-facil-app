@@ -1,7 +1,6 @@
 // utils/auth.context.tsx
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { redirectToRoleBasedHome } from './navigation.helper';
 
 export interface User {
   id: number;
@@ -48,17 +47,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const storedUser = await AsyncStorage.getItem('auth_user');
 
       if (storedToken && storedUser) {
-        const userData = JSON.parse(storedUser);
         setToken(storedToken);
-        setUser(userData);
-        
-        // Redirigir automáticamente basado en el rol cuando hay sesión existente
-        console.log('🔄 [AUTH] Sesión existente encontrada para:', userData.email, 'Rol:', userData.role);
-        
-        // Pequeño delay para asegurar que el estado esté actualizado
-        setTimeout(() => {
-          redirectToRoleBasedHome(userData.role);
-        }, 200);
+        setUser(JSON.parse(storedUser));
       }
     } catch (error) {
       console.error('Error loading stored auth:', error);
@@ -77,13 +67,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Additional validation to ensure token is not empty or just whitespace
       if (typeof userToken !== 'string' || userToken.trim().length === 0) {
         throw new Error('Invalid token format');
-      }
-
-      // Log token type for debugging
-      if (userToken.startsWith('temp_token_')) {
-        console.log('🔧 Storing temporary token for user:', userData.email);
-      } else {
-        console.log('✅ Storing valid JWT token for user:', userData.email);
       }
 
       await AsyncStorage.setItem('auth_token', userToken);

@@ -8,39 +8,32 @@ export type UserRole = 'USER' | 'DRIVER' | 'ADMIN';
  * @param role - Rol del usuario
  */
 export const redirectToRoleBasedHome = (role: string) => {
-  console.log(`🚀 [NAVIGATION] Iniciando redirección para rol: ${role}`);
+  console.log(`🚀 Redirigiendo usuario con rol: ${role}`);
   
   switch (role?.toUpperCase()) {
     case 'USER':
-      console.log('📱 [NAVIGATION] Usuario detectado, redirigiendo a MobileTransportApp...');
-      try {
-        // Usar solo replace sin dismissAll para evitar errores de navegación
-        router.replace('/MobileTransportApp/user');
-        console.log('✅ [NAVIGATION] Redirección a /MobileTransportApp/user ejecutada');
-      } catch (error) {
-        console.error('❌ [NAVIGATION] Error en redirección:', error);
-        // Fallback: usar push en lugar de replace
-        router.push('/MobileTransportApp/user');
-        console.log('🔄 [NAVIGATION] Fallback: usando push');
-      }
+      // Usuarios normales van a las tabs principales
+      console.log('📱 Redirigiendo a pantallas de Usuario');
+      router.replace('/(tabs)');
       break;
-      case 'DRIVER':
-        // Conductores van a su pantalla principal
-        console.log('🚗 [NAVIGATION] Conductor detectado, redirigiendo a Drivers...');
-        router.replace('/Drivers/HomeScreen');
-        break;
-        
-      case 'ADMIN':
-        // Administradores van a tabs (por ahora)
-        console.log('⚙️ [NAVIGATION] Admin detectado, redirigiendo a tabs...');
-        router.replace('/(tabs)');
-        break;
-        
-      default:
-        // Rol desconocido, ir a pantalla por defecto
-        console.warn(`⚠️ [NAVIGATION] Rol desconocido: ${role}, redirigiendo a tabs por defecto`);
-        router.replace('/(tabs)');
-        break;
+      
+    case 'DRIVER':
+      // Conductores van a su pantalla principal
+      console.log('🚗 Redirigiendo a pantallas de Conductor');
+      router.replace('/Drivers/HomeScreen');
+      break;
+      
+    case 'ADMIN':
+      // Administradores van a tabs (por ahora)
+      console.log('⚙️ Redirigiendo a panel de Administrador');
+      router.replace('/(tabs)');
+      break;
+      
+    default:
+      // Rol desconocido, ir a pantalla por defecto
+      console.warn(`⚠️ Rol desconocido: ${role}, redirigiendo a pantalla por defecto`);
+      router.replace('/(tabs)');
+      break;
   }
 };
 
@@ -52,7 +45,7 @@ export const redirectToRoleBasedHome = (role: string) => {
 export const getHomeRouteForRole = (role: string): string => {
   switch (role?.toUpperCase()) {
     case 'USER':
-      return '/MobileTransportApp/user';
+      return '/(tabs)';
     case 'DRIVER':
       return '/Drivers/HomeScreen';
     case 'ADMIN':
